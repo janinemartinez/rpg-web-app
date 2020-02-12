@@ -116,7 +116,7 @@ class Skill_list(db.Model):
     skill_name = db.Column(db.String(20), nullable=False)
     skill_desc = db.Column(db.String(60), nullable=False)
 
-class Char_spell(db.Model):
+class Char_skill(db.Model):
 
     __tablename__="char_skills"
 
@@ -126,6 +126,20 @@ class Char_spell(db.Model):
 
     skill_id = db.relationship("Skill_list", backref=db.backref("char_skills", order_by=c_skill_id))
     charl_id = db.relationship("Character", backref=db.backref("char_skills", order_by=c_skill_id))
+
+class Char_species(db.Model):
+
+    __tablename__= "Char_species"
+
+    spec_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    spec_name = db.Column(db.String(20), nullable=False)
+    #species bonus, traits, age, align, size, speed, speed desc, languages, vision
+    spec_description = db.Column(db.String(200), nullable=False)
+    spec_stat_mod = db.Column(db.String(40), nullable=False)
+    #other racial bonuses to come
+
+
+
 ##############################################################################
 # Helper functions
 
