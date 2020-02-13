@@ -35,11 +35,12 @@ class Character(db.Model):
     template_id = db.Column(db.Integer, db.ForeignKey('templates.template_id'), nullable=False)
     spec_id = db.Column(db.Integer, db.ForeignKey('species.spec_id'), nullable=False)
     char_name = db.Column(db.String(20), nullable=False)
-    flavor_txt = db.Column(db.String(1000), nullable=False)
+    flavor_txt = db.Column(db.Text, nullable=True)
     hit_points= db.Column(db.Integer, nullable=False)
     age= db.Column(db.Integer, nullable=False)
     experience_points = db.Column(db.Integer, nullable=True)
     character_level = db.Column(db.Integer, nullable=False)
+    num_skills = db.Column(db.Integer, nullable=False)
 
     user_id = db.relationship("User", backref=db.backref("characters", order_by=char_id))
     template_id = db.relationship("Template", backref=db.backref("characters", order_by=char_id))
@@ -51,16 +52,16 @@ class Template(db.Model):
     __tablename__ = "templates"
 
     template_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    #field that includes class archetypes so that tables can be used for multiple classes.
+    template_type = db.Column(db.String(20), nullable=False)
+    #name of class, or class archetype if applicable.
     template_name = db.Column(db.String(20), nullable=False)
-    #stored as json
-    description = db.Column(db.String(1000), nullable=False)
-    #how to store?
+    description = db.Column(db.Text, nullable=False)
     first_hit_dice= db.Column(db.Integer, nullable=False)
-    #how to store?
     hit_dice= db.Column(db.Integer, nullable=False)
-    score = db.Column(db.Integer, nullable=False)
-    #stored as json
-    resistances = db.column(db.String(60), nullable=True)
+    growth_table = db.Column(db.Text, nullable=False)
+    spell_ability_db.Column(db.String(20), nullable=False)
+    spell_subtype = db.Column(db.String(20), nullable=False)
 
 
 
@@ -72,17 +73,32 @@ class Class_spell(db.Model):
     class_spell_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     spell_id = db.Column(db.Integer, db.ForeignKey('spell_list.spell_id'), nullable=False)
     template_id = db.Column(db.Integer, db.ForeignKey('template.template_id'), nullable=False)
+    template_type = db.Column(db.String(20), db.ForeignKey('template.template_type'), nullable=False)
 
-    spell_id = db.relationship("Spell_list", backref=db.backref("class_spells", order_by=class_spell_id))
+    spell_id = db.relationship("Spell", backref=db.backref("class_spells", order_by=class_spell_id))
     template_id = db.relationship("Template", backref=db.backref("class_spells", order_by=class_spell_id))
+    template_type = db.relationship("Template", backref=db.backref("class_spells", order_by=class_spell_id))   
 
-class Spell_list(db.Model):
+class Spell(db.Model):
 
-    __tablename__= "spell_list"
+    __tablename__= "spells"
 
     spell_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     spell_name = db.Column(db.String(20), nullable=False)
-    spell_desc = db.Column(db.String(60), nullable=False)
+    spell_desc = db.Column(db.Text, nullable=False)
+    higher_level = db.Column(db.Text, nullable=False)
+    spell_range = db.Column(db.String(20), nullable=False)
+    components = db.Column(db.String(20), nullable=False)
+    material = db.Column(db.Text, nullable=False)
+    ritual = db.Column(db.Boolean, default=False, nullable=False)
+    duration = db.Column(db.Integer, nullable=False)
+    concentration = db.Column(db.Boolean, default=False, nullable=False)
+    casting_time = db.Column(db.Integer, nullable=False)
+    spell_level = db.Column(db.Integer, nullable=False)
+    int_requirement = db.Column(db.Integer, nullable=False)
+    school = db.Column(db.String(20), nullable=False)
+    archetype = db.Column(db.String(20), nullable=True)
+    circles = db.Column(db.String(20), nullable=True)
 
 class Char_spell(db.Model):
 
@@ -92,25 +108,25 @@ class Char_spell(db.Model):
     spell_id = db.Column(db.Integer, db.ForeignKey('spell_list.spell_id'), nullable=False)
     char_id = db.Column(db.Integer, db.ForeignKey('characters.char_id'), nullable=False)
 
-    spell_id = db.relationship("Spell_list", backref=db.backref("char_spells", order_by=c_spell_id))
+    spell_id = db.relationship("Spell", backref=db.backref("char_spells", order_by=c_spell_id))
     charl_id = db.relationship("Character", backref=db.backref("char_spells", order_by=c_spell_id))
 
 
-class Class_skill(db.Model):
-    """spells and the classes that can weild them"""
+# class Class_skill(db.Model):
+#     """spells and the classes that can weild them"""
 
-    __tablename__ = "class_skills"
+#     __tablename__ = "class_skills"
 
-    class_skill_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    skill_id = db.Column(db.Integer, db.ForeignKey('skill_list.skill_id'), nullable=False)
-    template_id = db.Column(db.Integer, db.ForeignKey('template.template_id'), nullable=False)
+#     class_skill_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     skill_id = db.Column(db.Integer, db.ForeignKey('skill_list.skill_id'), nullable=False)
+#     template_id = db.Column(db.Integer, db.ForeignKey('template.template_id'), nullable=False)
 
-    skill_id = db.relationship("Skill_list", backref=db.backref("class_skills", order_by=class_skill_id))
-    template_id = db.relationship("Template", backref=db.backref("class_skills", order_by=class_skill_id))
+#     skill_id = db.relationship("Skill_list", backref=db.backref("class_skills", order_by=class_skill_id))
+#     template_id = db.relationship("Template", backref=db.backref("class_skills", order_by=class_skill_id))
 
-class Skill_list(db.Model):
+class Skill(db.Model):
 
-    __tablename__= "skill_list"
+    __tablename__= "skills"
 
     skill_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     skill_name = db.Column(db.String(20), nullable=False)
@@ -121,10 +137,10 @@ class Char_skill(db.Model):
     __tablename__="char_skills"
 
     c_skill_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    skill_id = db.Column(db.Integer, db.ForeignKey('skill_list.skill_id'), nullable=False)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skills.skill_id'), nullable=False)
     char_id = db.Column(db.Integer, db.ForeignKey('characters.char_id'), nullable=False)
 
-    skill_id = db.relationship("Skill_list", backref=db.backref("char_skills", order_by=c_skill_id))
+    skill_id = db.relationship("Skill", backref=db.backref("char_skills", order_by=c_skill_id))
     charl_id = db.relationship("Character", backref=db.backref("char_skills", order_by=c_skill_id))
 
 class Char_species(db.Model):
@@ -132,11 +148,19 @@ class Char_species(db.Model):
     __tablename__= "Char_species"
 
     spec_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    spec_type = db.Column(db.String(20), nullable=False)
     spec_name = db.Column(db.String(20), nullable=False)
     #species bonus, traits, age, align, size, speed, speed desc, languages, vision
-    spec_description = db.Column(db.String(200), nullable=False)
+    spec_description = db.Column(db.String(3000), nullable=False)
+    age_nfos = db.Column(db.Text, nullable=False)
+    size_nfos = db.Column(db.Text, nullable=False)
+    speed = db.Column(db.Integer, nullable=False)
+    spd_nfos = db.Column(db.Text, nullable=False)
+    languages = db.Column(db.Text, nullable=False)
+    vision = db.Column(db.Text, nullable=False)
+    traits = db.Column(db.Text, nullable=False)
+    #asi
     spec_stat_mod = db.Column(db.String(40), nullable=False)
-    #other racial bonuses to come
 
 
 
