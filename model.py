@@ -33,7 +33,7 @@ class Character(db.Model):
     char_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.template_id'), nullable=False)
-    spec_id = db.Column(db.Integer, db.ForeignKey('species.spec_id'), nullable=False)
+    spec_id = db.Column(db.Integer, db.ForeignKey('char_species.spec_id'), nullable=False)
     char_name = db.Column(db.String(20), nullable=False)
     flavor_txt = db.Column(db.Text, nullable=True)
     hit_points= db.Column(db.Integer, nullable=False)
@@ -44,6 +44,7 @@ class Character(db.Model):
 
     user_id = db.relationship("User", backref=db.backref("characters", order_by=char_id))
     template_id = db.relationship("Template", backref=db.backref("characters", order_by=char_id))
+    spec_id = db.relationship("Char_species", backref=db.backref("characters", order_by=char_id))
 
 
 class Template(db.Model):
@@ -145,7 +146,7 @@ class Char_skill(db.Model):
 
 class Char_species(db.Model):
 
-    __tablename__= "Char_species"
+    __tablename__= "char_species"
 
     spec_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     spec_type = db.Column(db.String(20), nullable=False)
@@ -185,15 +186,4 @@ if __name__ == "__main__":
     from server import app
     connect_to_db(app)
     print("Connected to DB.")
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
+
