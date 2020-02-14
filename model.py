@@ -1,4 +1,4 @@
-"""Models and database functions for Ratings project."""
+
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -57,12 +57,16 @@ class Template(db.Model):
     template_type = db.Column(db.String(20), nullable=False)
     #name of class, or class archetype if applicable.
     template_name = db.Column(db.String(20), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    first_hit_dice= db.Column(db.Integer, nullable=False)
+    desc = db.Column(db.Text, nullable=False)
+
+    # first_hit_dice= db.Column(db.Integer, nullable=False)
     hit_dice= db.Column(db.Integer, nullable=False)
     growth_table = db.Column(db.Text, nullable=False)
     spell_ability_db.Column(db.String(20), nullable=False)
     spell_subtype = db.Column(db.String(20), nullable=False)
+    features_table = db.Column(db.Text, nullable=False)
+
+    spells = db.relationship('Spell', backref='templates', secondary='class_spells')
 
 
 
