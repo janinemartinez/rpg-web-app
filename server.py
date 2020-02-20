@@ -2,111 +2,112 @@
 
 from jinja2 import StrictUndefined
 
-from flask import (Flask, render_template, redirect, request, flash, session)
+from flask import (Flask, render_template, redirect, request, flash, session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
-from model import Template
-
-
-# from model import User, Character, Template, Class_spell, Spell, Char_spell
-
+from model import connect_to_db, db, User, Character, Template, Spell, Char_species
+import helper
 
 app = Flask(__name__)
 
-# Required to use Flask sessions and the debug toolbar
-app.secret_key = "ABC"
+app.secret_key = "POOP"
 
-# Normally, if you use an undefined variable in Jinja2, it fails
-# silently. This is horrible. Fix this so that, instead, it raises an
-# error.
 app.jinja_env.undefined = StrictUndefined
 
-
-# @app.route('/')
-# def index():
-#     """Homepage."""
-#     return render_template("homepage.html")
-
-
-# @app.route('/register', methods=["GET"])
-# def register_form():
-
-#     return render_template("register_form.html")
+@app.route('/')
+def index():
+    """Homepage."""
+    return render_template("homepage.html")
 
 
-# @app.route('/register', methods=["POST"])
-# def register_process():
-#     email = request.form.get('email')
-#     password = request.form.get('password')
-#     # age = int(request.form.get('age'))
-#     # zipcode = request.form.get('zipcode')
+@app.route('/register', methods=["GET"])
+def register_form():
 
-#     if not User.query.filter_by(email=email).first():
-#         user = User(email=email, password=password)
-#         # zipcode=zipcode, age=age
-#         db.session.add(user)
-#         db.session.commit()
+    return render_template("register_form.html")
 
-#     else:
-#         return redirect('/')
-#         #placeholder
+@app.route('/register', methods=["POST"])
+def register_process():
+    email = request.form.get('email')
+    password = request.form.get('password')
 
-#     return redirect('/')
+    if not User.query.filter_by(email=email).first():
+        user = User(email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
 
-# @app.route('/log_in', methods=["GET"])
-# def log_in():
+    else:
+        return redirect('/')
+        #placeholder
 
-#     return render_template("log_in.html")
-
-# @app.route('/log_in', methods=["POST"])
-# def log_in_form():
-#     email = request.form.get('email')
-#     password = request.form.get('password')
-
-#     db_user = User.query.filter_by(email=email).first()
-#     db_password = db_user.password
-
-#     if password == db_password:
-#         session['user_id'] = db_user.user_id
-#         flash('You were successfully logged in.')
-#         return redirect('/')
-
-#     else:
-#         flash('Incorrect username or password.')
-#         return redirect('/log_in')
+    return redirect('/')
 
 
-# @app.route('/log_out', methods=["GET"])
-# def log_out():    
-#     del session['user_id']
-#     flash('User logged out.')
-#     print(session)
-#     return redirect('/')
+@app.route('/character_start')
+def start_making_character():
 
-# @app.route('/users')
-# def user_list():
-#     """Show list of users."""
-#     users = User.query.all()
-#     return render_template("user_list.html", users=users)
+    temp_nfo = db.session.query(Template.template_id, Template.template_name).all()
 
-# @app.route('/users/<user_id>')
-# #route to /945 user id
-# def user_details(user_id):
+    spec_nfo = db.session.query(Char_species.spec_id, Char_species.spec_type).all()
 
-#     user = User.query.filter_by(user_id=user_id).first()
+    return render_template("character_start.html", temp_nfo=temp_nfo, spec_nfo=spec_nfo)
 
-#     return render_template("user_details.html", user=user)
+@app.route('/character_start' methods=["POST"])
+def first_form():
+    character = Character(user_id=user_id, template_id=template_id, spec_id=spec_id, 
+        char_name=char_name, flavor_txt=flavor_txt, char_age=char_age)
+
+
+
+
+
+
+
+
+@app.route('/builds_character' methods=["POST"])
+def second_form():
+
+    return render_template("builds_character")
+
+
+@app.route('/log_in', methods=["GET"])
+def log_in():
+
+    return render_template("log_in.html")
+
+@app.route('/log_in', methods=["POST"])
+def log_in_form():
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    db_user = User.query.filter_by(email=email).first()
+    db_password = db_user.password
+
+    if password == db_password:
+        session['user_id'] = db_user.user_id
+        flash('You were successfully logged in.')
+        return redirect('/')
+
+    else:
+        flash('Incorrect username or password.')
+        return redirect('/log_in')
+
+
+@app.route('/log_out', methods=["GET"])
+def log_out():    
+    del session['user_id']
+    flash('User logged out.')
+    print(session)
+    return redirect('/')
 
 
 if __name__ == "__main__":
-    # We have to set debug=True here, since it has to be True at the
-    # point that we invoke the DebugToolbarExtension
+
     app.debug = True
-    # make sure templates, etc. are not cached in debug mode
+
     app.jinja_env.auto_reload = app.debug
 
-    # connect_to_db(app)
+    connect_to_db(app)
 
-    # Use the DebugToolbar
     DebugToolbarExtension(app)
 
-    app.run(port=5000, host='0.0.0.0')
+    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+    app.run(host="0.0.0.0", debug=True)
