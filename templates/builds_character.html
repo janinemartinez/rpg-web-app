@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dependencies</title>
+</head>
+<body>
+
+  <h2>Build your character.</h2>
+
+
+  <ul>	
+  		<form action = '/builds_character' method="POST">
+  		<label>Pick a name.</label><br>
+  		<input type="text" name="char_name">
+  		</form>
+  </ul>
+  <ul>
+  	<form action = '/builds_character' method="POST">
+  		<label>Class Templates</label>
+    {% for nfo in temp_nfo %}
+      <li>
+          <input type="radio" name = "template_id" value="{{ nfo[0] }}">
+          <label> {{ nfo[1] }}</label>
+      </li>
+    {% endfor %}
+	</form>
+  </ul>
+
+  <ul>
+  	<form action = '/builds_character' method="POST">
+  		<label>Species Types</label>
+    {% for nfo in spec_nfo %}
+      <li>
+          <input type="radio" name = "spec_id" value="{{ nfo[0] }}">
+          <label> {{ nfo[1] }}</label>
+      </li>
+    {% endfor %}
+	</form>
+  </ul>
+  <ul>	
+  		<form action = '/builds_character' method="POST">
+  		<label>Describe your character.</label><br>
+  		<textarea rows = "5" cols = "80" maxlength = "300" name="flavor_txt"></textarea>
+  		</form>
+  </ul>
+    <ul>	
+  		<form action = '/builds_character' method="POST">
+  		<label>What is your characters age?</label><br>
+  		<input type="text" name="char_age">
+  		</form>
+
+  		 <input type= "submit">
+  </ul>
+
+
+
+
+
+
+</body>
+</html>
