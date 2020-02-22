@@ -1,61 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dependencies</title>
+    <title>Attributes</title>
 </head>
 <body>
 
   <h2>Build your character.</h2>
 
+      <p>Roll your attributes using 4d6 and throwing out the lowest roll in order to compile an attribute. Once you have completed this process six times you may insert them into the fields you want them to populate, then hit submit.,</p>
 
-  <ul>	
-  		<form action = '/builds_character' method="POST">
-  		<label>Pick a name.</label><br>
-  		<input type="text" name="char_name">
-  		</form>
-  </ul>
-  <ul>
-  	<form action = '/builds_character' method="POST">
-  		<label>Class Templates</label>
-    {% for nfo in temp_nfo %}
-      <li>
-          <input type="radio" name = "template_id" value="{{ nfo[0] }}">
-          <label> {{ nfo[1] }}</label>
-      </li>
-    {% endfor %}
-	</form>
-  </ul>
-
-  <ul>
-  	<form action = '/builds_character' method="POST">
-  		<label>Species Types</label>
-    {% for nfo in spec_nfo %}
-      <li>
-          <input type="radio" name = "spec_id" value="{{ nfo[0] }}">
-          <label> {{ nfo[1] }}</label>
-      </li>
-    {% endfor %}
-	</form>
-  </ul>
-  <ul>	
-  		<form action = '/builds_character' method="POST">
-  		<label>Describe your character.</label><br>
-  		<textarea rows = "5" cols = "80" maxlength = "300" name="flavor_txt"></textarea>
-  		</form>
-  </ul>
-    <ul>	
-  		<form action = '/builds_character' method="POST">
-  		<label>What is your characters age?</label><br>
-  		<input type="text" name="char_age">
-  		</form>
-
-  		 <input type= "submit">
-  </ul>
+            <form action = '/builds_character' method="POST">
+                  <label>Strength:</label><br>
+                  <input type="number" name="strength">
+                  <label>Dexterity:</label><br>
+                  <input type="number" name="dexterity">
+                  <label>Constitution:</label><br>
+                  <input type="number" name="constitution">
+                  <label>Intelligence:</label><br>
+                  <input type="number" name="intelligence">
+                  <label>Wisdom:</label><br>
+                  <input type="number" name="wisdom">
+                  <label>Charisma:</label><br>
+                  <input type="number" name="charisma">
 
 
-
-
-
+                  <input type="hidden"  name="template_id" id="template_id" value= "{{ template_id }}">
+                  <input type="hidden"  name="user_id" id="user_id" value= "{{ user_id }}">
+                  <input type="hidden"  name="spec_id" id="spec_id" value= "{{ spec_id }}">
+                  <input type="hidden"  name="char_name" id="char_name" value= "{{ char_name }}">
+                  <input type="hidden"  name="flavor_txt" id="flavor_txt" value= "{{ flavor_txt }}">
+                  <input type="hidden"  name="age" id="age" value= "{{ age }}">
+                  <input type="hidden"  name="character_level" id="character_level" value= "1">
+                  <input type="hidden"  name="experience_points" id="experience_points" value= "0">
+                  <input type= "submit">
+            </form>
 
 </body>
 </html>

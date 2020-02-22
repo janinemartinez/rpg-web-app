@@ -1,55 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Classes</title>
+    <title>Independent Values</title>
 </head>
 <body>
 
   <h2>Build your character.</h2>
-
-
+  		<form action = '/character_start' method="POST">
   <ul>	
-  		<form action = '/builds_character' method="POST">
+  		
   		<label>Pick a name.</label><br>
   		<input type="text" name="char_name">
-  		</form>
+ 
   </ul>
   <ul>
-  	<form action = '/builds_character' method="POST">
+
   		<label>Class Templates</label>
     {% for nfo in temp_nfo %}
       <li>
-          <input type="radio" name = "class_choice" value="{{ nfo[0] }}">
+          <input type="radio" name = "template_id" value="{{ nfo[0] }}"/>
           <label> {{ nfo[1] }}</label>
       </li>
     {% endfor %}
-	</form>
+	
   </ul>
 
   <ul>
-  	<form action = '/builds_character' method="POST">
   		<label>Species Types</label>
     {% for nfo in spec_nfo %}
       <li>
-          <input type="radio" name = "class_choice" value="{{ nfo[0] }}">
+          <input type="radio" name = "spec_id" value="{{ nfo[0] }}"/>
           <label> {{ nfo[1] }}</label>
       </li>
     {% endfor %}
-	</form>
   </ul>
   <ul>	
-  		<form action = '/builds_character' method="POST">
   		<label>Describe your character.</label><br>
-  		<textarea rows = "5" cols = "80" maxlength = "300" name="char_name"></textarea>
-  		</form>
+  		<textarea rows = "5" cols = "80" maxlength = "300" name="flavor_txt"></textarea>
+  		
   </ul>
     <ul>	
-  		<form action = '/builds_character' method="POST">
+  		<form action = '/character_start' method="POST">
   		<label>What is your characters age?</label><br>
-  		<input type="text" name="char_name">
+  		<input type="number" name="age">
+  		<input type= "submit">
   		</form>
 
-  		 <input type= "submit">
+
   </ul>
 
 

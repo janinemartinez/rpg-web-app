@@ -20,7 +20,7 @@ class User(db.Model):
 
     def __repr__(self):
 
-        return f"<User user_id={self.user_id} email={self.email}>"
+        return f"""<User user_id={self.user_id} email={self.email}>"""
 
 class Character(db.Model):
     """completed characters"""
@@ -42,6 +42,19 @@ class Character(db.Model):
     user = db.relationship("User", backref=db.backref("characters", order_by=char_id))
     template = db.relationship("Template", backref=db.backref("characters", order_by=char_id))
     char_species = db.relationship("Char_species", backref=db.backref("characters", order_by=char_id))
+
+    def __repr__(self):
+            """Return a human-readable representation of a Human."""
+            return f"""<Character char_id={self.char_id}
+                        user_id={self.user_id}
+                        template_id={self.template_id}
+                        spec_id={self.spec_id}
+                        char_name={self.char_name}
+                        hit_points={self.hit_points}
+                        experience_points={self.experience_points}
+                        character_level={self.character_level}
+                        num_skills={self.num_skills}>"""
+
 
 
 class Template(db.Model):
@@ -162,6 +175,16 @@ class Char_species(db.Model):
     #asi
     spec_stat_mod = db.Column(db.Text, nullable=False)
 
+    def __repr__(self):
+            """Return a human-readable representation of a Human."""
+            return f"""<Char_species spec_id={self.spec_id}
+                        spec_type={self.spec_type}
+                        age_nfos={self.size_nfos}
+                        align_nfos={self.align_nfos}
+                        size_nfos={self.size_nfos}
+                        languages={self.languages}
+                        vision={self.vision}
+                        spec_stat_mod={self.spec_stat_mod}>"""
 
 
 ##############################################################################
