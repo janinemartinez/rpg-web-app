@@ -5,40 +5,83 @@
 </head>
 <body>
 
-  <h2>Build your character.</h2>
+  	<h2>Build your character.</h2>
   		<form action = '/character_start' method="POST">
-  <ul>	
+  	<ul>	
   		
   		<label>Pick a name.</label><br>
   		<input type="text" name="char_name">
  
-  </ul>
-  <ul>
+  	</ul>
+
+ 	<ul>
 
   		<label>Class Templates</label>
-    {% for nfo in temp_nfo %}
+    	{% for nfo in temp_nfo %}
       <li>
           <input type="radio" name = "template_id" value="{{ nfo[0] }}"/>
           <label> {{ nfo[1] }}</label>
       </li>
-    {% endfor %}
+    	{% endfor %}
 	
-  </ul>
+  	</ul>
 
-  <ul>
+  	<ul>
   		<label>Species Types</label>
-    {% for nfo in spec_nfo %}
+    	{% for nfo in spec_nfo %}
       <li>
           <input type="radio" name = "spec_id" value="{{ nfo[0] }}"/>
           <label> {{ nfo[1] }}</label>
       </li>
-    {% endfor %}
-  </ul>
-  <ul>	
+    	{% endfor %}
+  	</ul>
+  	<ul>
+
+  		<label>Alignment</label>
+		<li>
+	        <input type="radio" name = "char_align" value="Chaotic Good"/>
+	        <label> Chaotic Good</label><br>
+	    </li>
+	    <li>
+	        <input type="radio" name = "char_align" value="Chaotic Nuetral"/>
+	        <label> Chaotic Nuetral</label><br>
+	    </li>
+	    <li>
+	        <input type="radio" name = "char_align" value="Chaotic Evil"/>
+	        <label> Chaotic Evil</label><br>
+	    </li>
+	    <li>
+	        <input type="radio" name = "char_align" value="Nuetral Good"/>
+	        <label> Nuetral Good</label><br>
+	    </li>
+	    <li>
+	        <input type="radio" name = "char_align" value="True Nuetral"/>
+	        <label> True Nuetral</label><br>
+	    </li>
+	    <li>
+	        <input type="radio" name = "char_align" value="Nuetral Evil"/>
+	        <label> Nuetral Evil</label><br>
+	    </li>
+	    <li>
+	        <input type="radio" name = "char_align" value="Lawful Good"/>
+	        <label> Lawful Good</label><br>
+	    </li>
+	    <li>
+	        <input type="radio" name = "char_align" value="Lawful Nuetral"/>
+	        <label> Lawful Nuetral</label><br>
+	    </li>
+	    <li>
+	        <input type="radio" name = "char_align" value="Lawful Evil"/>
+	        <label> Lawful Evil</label><br>
+      </li>
+
+	
+ </ul>
+ 	<ul>	
   		<label>Describe your character.</label><br>
   		<textarea rows = "5" cols = "80" maxlength = "300" name="flavor_txt"></textarea>
   		
-  </ul>
+  	</ul>
     <ul>	
   		<form action = '/character_start' method="POST">
   		<label>What is your characters age?</label><br>
