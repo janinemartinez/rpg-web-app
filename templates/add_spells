@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Spells</title>
+</head>
+<body>
+
+  <h2>Build your character.</h2>
+
+      <p>Hit submit to save your character</p>
+
+      <p>{{ temp }}
+
+
+
+</body>
+</html>

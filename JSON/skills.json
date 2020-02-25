@@ -1,0 +1,117 @@
+
+
+{
+    "count": 18,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "skill_id": 1,
+            "skill_name": "Athletics",
+            "skill_desc": "Rolls strength check for difficult situations encountered while swimming, climbing or jumping. Climbing cliffs and walls  while being attacked. Difficult jumps of long distances, or including a stunt mid-jump. Swimming while under attack, or in difficult weather.",
+            "attribute": "strength"
+        },
+        {
+            "skill_id": 2,
+            "skill_name": "Acrobatics",
+            "skill_desc": "Covers attempting to stay upright in tricky situations, such as in a rocking boat, or while balancing on a tight-rope. DM may call an actobatics check while attempting to perform acrobatic stunts, such as tumbling, and flips.",
+            "attribute": "Dexterity"
+        },
+        {
+            "skill_id": 3,
+            "skill_name": "Sleight of Hand",
+            "skill_desc": "**add desc.**",
+            "attribute": "Dexterity"
+        },
+        {
+            "skill_id": 4,
+            "skill_name": "Stealth",
+            "skill_desc": "**add desc.**",
+            "attribute": "Dexterity"
+        },
+        {
+            "skill_id": 5,
+            "skill_name": "Arcana",
+            "skill_desc": "**add desc.**",
+            "attribute": "Intelligence"
+        },
+        {
+            "skill_id": 6,
+            "skill_name": "History",
+            "skill_desc": "**add desc.**",
+            "attribute": "Intelligence"
+        },
+        {
+            "skill_id": 7,
+            "skill_name": "Investigation",
+            "skill_desc": "**add desc.**",
+            "attribute": "Intelligence"
+        },
+        {
+            "skill_id": 8,
+            "skill_name": "Nature",
+            "skill_desc": "**add desc.**",
+            "attribute": "Intelligence"
+        },
+        {
+            "skill_id": 9,
+            "skill_name": "Religion",
+            "skill_desc": "**add desc.**",
+            "attribute": "Intelligence"
+        },
+        {
+            "skill_id": 10,
+            "skill_name": "Animal Handling",
+            "skill_desc": "**add desc.**",
+            "attribute": "Wisdom"
+        },
+        {
+            "skill_id": 11,
+            "skill_name": "Insight",
+            "skill_desc": "**add desc.**",
+            "attribute": "Wisdom"
+        },
+        {
+            "skill_id": 12,
+            "skill_name": "Medicine",
+            "skill_desc": "**add desc.**",
+            "attribute": "Wisdom"
+        },
+        {
+            "skill_id": 13,
+            "skill_name": "Perception",
+            "skill_desc": "**add desc.**",
+            "attribute": "Wisdom"
+        },
+        {
+            "skill_id": 14,
+            "skill_name": "Survival",
+            "skill_desc": "**add desc.**",
+            "attribute": "Wisdom"
+        },
+        {
+            "skill_id": 15,
+            "skill_name": "Deception",
+            "skill_desc": "**add desc.**",
+            "attribute": "Charisma"
+        },
+        {
+            "skill_id": 16,
+            "skill_name": "Intimidation",
+            "skill_desc": "**add desc.**",
+            "attribute": "Charisma"
+        },
+        {
+            "skill_id": 17,
+            "skill_name": "Performance",
+            "skill_desc": "**add desc.**",
+            "attribute": "Charisma"
+        },
+        {
+            "skill_id": 18,
+            "skill_name": "Persuasion",
+            "skill_desc": "**add desc.**",
+            "attribute": "Charisma"
+        }
+    ]
+}

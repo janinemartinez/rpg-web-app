@@ -1,0 +1,21 @@
+                                           Table "public.characters"
+      Column       |         Type          | Collation | Nullable |                   Default                   
+-------------------+-----------------------+-----------+----------+---------------------------------------------
+ char_id           | integer               |           | not null | nextval('characters_char_id_seq'::regclass)
+ user_id           | integer               |           | not null | 
+ template_id       | integer               |           | not null | 
+ spec_id           | integer               |           | not null | 
+ char_name         | character varying(20) |           | not null | 
+ flavor_txt        | text                  |           |          | 
+ hit_points        | integer               |           | not null | 
+ age               | integer               |           | not null | 
+ experience_points | integer               |           |          | 
+ character_level   | integer               |           | not null | 
+ num_skills        | integer               |           | not null | 
+Indexes:
+    "characters_pkey" PRIMARY KEY, btree (char_id)
+Foreign-key constraints:
+    "characters_spec_id_fkey" FOREIGN KEY (spec_id) REFERENCES char_species(spec_id)
+    "characters_template_id_fkey" FOREIGN KEY (template_id) REFERENCES templates(template_id)
+    "characters_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(user_id)
+

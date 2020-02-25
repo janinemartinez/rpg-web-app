@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>dependencies</title>
+</head>
+<body>
+
+  <h2>Build your character.</h2>
+
+      <p>Hit Points</p>
+
+      <p>Based on your constitution score constitution modifier is {{ mod }}. We rolled two random {{ hitdice }} sided dice. Your rolls were {{ first_roll }} and {{ second_roll }}. We selected the higher roll, and added your constitution modifier giving you {{ hit_points }} hitpoints. Hit submit to save your hit points.
+
+            <form action = '/dependencies' method="POST">
+
+
+
+                  <input type="hidden" name="template_id" id="template_id" value= "{{ template_id }}">
+                  <input type="hidden" name="user_id" id="user_id" value= "{{ user_id }}">
+                  <input type="hidden" name="spec_id" id="spec_id" value= "{{ spec_id }}">
+                  <input type="hidden" name="char_name" id="char_name" value= "{{ char_name }}">
+                  <input type="hidden" name="flavor_txt" id="flavor_txt" value= "{{ flavor_txt }}">
+                  <input type="hidden" name="age" id="age" value= "{{ age }}">
+                  <input type="hidden" name="strength" id="strength" value="{{ strength }}">
+                  <input type="hidden" name="dexterity" id="dexterity" value="{{ dexterity }}">
+                  <input type="hidden" name="constitution" id="constitution" value="{{ constitution }}">
+                  <input type="hidden" name="intelligence" id="intelligence" value="{{ intelligence }}">
+                  <input type="hidden" name="wisdom" id="wisdom" value="{{ wisdom }}">
+                  <input type="hidden" name="charisma" id="charisma" value="{{ charisma }}">
+                  <input type="hidden"  name="character_level" id="character_level" value= "{{ experience_points }}">
+                  <input type="hidden"  name="char_align" id="char_align" value= "{{ char_align }}">
+                  <input type="hidden"  name="experience_points" id="experience_points" value= "{{ character_level }}">
+                  <input type="hidden"  name="hit_points" id="hit_points" value= "{{ hit_points }}">
+                  <input type="submit">
+            </form>
+
+
+
+</body>
+</html>
