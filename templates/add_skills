@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Skills</title>
+</head>
+<body>
+
+  <h2>Build your character.</h2>
+
+    <p>Pick {{ num_skills[-1] }} skills for your characters</p>
+
+    <form action = '/commit_char_true' method="POST">
+
+      <p>
+         
+        {% for pick_one in num_skills %}
+          <label>Skill {{ pick_one }}</label>
+          {% for skill in skills %}
+          <li>
+            <input type="radio" name = "skill_id_{{ pick_one }}" value="{{ skill[0] }}"/>
+            <label> {{ skill[1] }}</label></li>
+        {% endfor %}
+            <br>
+        {% endfor %}
+
+            {% for i in other_list %}
+            <input type="hidden" name="skill_id_{{ i }}" id="skill_id_{{ i }}" value= "0">
+            {% endfor %}
+            <input type="hidden" name="user_id" id="user_id" value= "{{ user_id }}">
+            <input type="hidden" name="template_id" id="template_id" value= "{{ template_id }}">
+            <input type="hidden" name="char_id" id="char_id" value= "{{ char_id }}">
+
+            <input type= "submit">
+    </form>
+
+</body>
+</html>

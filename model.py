@@ -39,7 +39,8 @@ class Character(db.Model):
     age= db.Column(db.Integer, nullable=False)
     experience_points = db.Column(db.Integer, nullable=True)
     character_level = db.Column(db.Integer, nullable=False)
-    # num_skills = db.Column(db.Integer, nullable=True)
+    #change to spells known
+    num_spells = db.Column(db.Integer, nullable=True)
 
     user = db.relationship("User", backref=db.backref("characters", order_by=char_id))
     template = db.relationship("Template", backref=db.backref("characters", order_by=char_id))
@@ -59,7 +60,7 @@ class Character(db.Model):
                         hit_points={self.hit_points}
                         experience_points={self.experience_points}
                         character_level={self.character_level}
-                        num_skills={self.num_skills}>"""
+                        num_spells={self.num_spells}>"""
 
 
 class Attribute(db.Model):
@@ -222,6 +223,12 @@ class Class_spell(db.Model):
 
     spells_rel = db.relationship("Spell", backref=db.backref("class_spells", order_by=class_spell_id))
     temp_rel = db.relationship("Template", backref=db.backref("class_spells", order_by=class_spell_id))
+
+    def __repr__(self):
+        """Return a human-readable representation of a Human."""
+        return f"""<Class_spell class_spell_id={self.class_spell_id}
+                    spell_id={self.spell_id}
+                    template_id={self.template_id}>"""
 
 class Char_species(db.Model):
 

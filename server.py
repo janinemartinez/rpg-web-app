@@ -31,6 +31,64 @@ def modifiers(attribute):
 
     return attribute//2-5
 
+def if_spells(dct):
+    for item in range(0, 21):
+        try:
+            if dct.get(f'{item}'):
+                return True
+        except AttributeError:
+            continue
+    return False
+
+def how_many_spells(lst):
+
+    num_levels = 0
+    dif_levels = []
+
+    for i in lst:
+        if i[0] in dif_levels:
+            continue
+        else:
+            dif_levels.append(i[0])
+            num_levels += 1
+
+    return list(range(num_levels)), dif_levels
+
+def growth_lst(dict):
+
+    iters=0
+    growth_list = []
+
+    for key in dict:
+        for rnge in range((dict[key])):
+            growth_list.append((iters, int(key)))
+            iters+=1
+    return growth_list
+
+def compliment_list(last, num):
+
+    return list(range((last[-1]+1), num))
+
+def commit_spell(spell_array, char):
+
+    for spell in spell_array:
+        if int(spell) < 1:
+            continue
+        else:    
+            spell_obj=Char_spell(char_id=char, spell_id=spell)
+            db.session.add(spell_obj)
+    db.session.commit()
+
+def commit_skill(skill_array, char):
+
+    for skill in skill_array:
+        if int(skill) < 1:
+            continue
+        else:    
+            skill_obj=Char_skill(char_id=char, skill_id=skill)
+            db.session.add(skill_obj)
+    db.session.commit()
+
 
 @app.route('/')
 def index():
@@ -164,49 +222,161 @@ def commit_char_attr():
     char_align = request.form.get('char_align')
     character_level = int(request.form.get('character_level'))
     char_name = request.form.get('char_name')
-    charisma = request.form.get('charisma')
-    constitution = request.form.get('constitution')
-    dexterity = request.form.get('dexterity')
+    charisma = int(request.form.get('charisma'))
+    constitution = int(request.form.get('constitution'))
+    dexterity = int(request.form.get('dexterity'))
     experience_points = int(request.form.get('experience_points'))
     flavor_txt = request.form.get('flavor_txt')  
-    hit_points = request.form.get('hit_points')
-    intelligence = request.form.get('intelligence')
+    hit_points = int(request.form.get('hit_points'))
+    intelligence = int(request.form.get('intelligence'))
     spec_id = int(request.form.get('spec_id'))
-    strength = request.form.get('strength')
+    strength = int(request.form.get('strength'))
     template_id = int(request.form.get('template_id'))
     user_id = int(request.form.get('user_id'))
-    wisdom = request.form.get('wisdom')
+    wisdom = int(request.form.get('wisdom'))
 
-
+    #creates attribute object
     attributes = Attribute(strength=strength, dexterity=dexterity, constitution=constitution, wisdom=wisdom, intelligence=intelligence, charisma=charisma)
 
+    #adds attrobite object to the session and flushes
     db.session.add(attributes)
     db.session.flush()
 
+    #searches attribute in session to retrieve id
     attrib = db.session.query(Attribute).order_by(Attribute.attributes_id.desc()).first()
-
     attributes_id = attrib.attributes_id
 
+    #creates character object
     character = Character(user_id=user_id, char_align=char_align, hit_points=hit_points, template_id=template_id, 
         spec_id=spec_id, char_name=char_name, flavor_txt=flavor_txt, age=age, experience_points=experience_points,
         character_level=character_level, attributes_id=attributes_id)
 
+    #commits character object and attribute object to database
     db.session.add(character)
-    db.session.flush()
-
-    char = db.session.query(Character).order_by(Character.char_id.desc()).first()
-
     db.session.commit()
 
-    temp_stuff = db.session.query(Template.template_id).first()
-    temp = temp_stuff
+    #retrieves character id
+    char = db.session.query(Character).order_by(Character.char_id.desc()).first()
+    this_template = Template.query.filter_by(template_id=template_id).first()
+
+    #retrieves the jsons which shows the characters accumulation of spells and special abilities
+    growth_item = json.loads(this_template.growth_table)
+    growth_item = growth_item[f'{character_level}']
 
 
-    flash('Character successfully saved')
+    #nullifies instances where that would cause the user to select spells lest they have no spells to pick
+    if "spells_known" in growth_item:
+        del growth_item["spells_known"]
 
-    return render_template("add_spells", temp=temp) 
+    if "bonus_spell" in growth_item:
+        del growth_item["bonus_spell"]
+
+    if "Additional Spells" in growth_item:
+        del growth_item["Additional Spells"]
+
+    spells = if_spells(growth_item)
+
+    char_id = char.char_id
+
+    if this_template.spell_ability == "null" or spells == False:
+
+        skills = []
+
+        skill_nfo, skills_num = this_template.skill_choices, this_template.num_skills
+        skill_info = skill_nfo.rsplit(', ')
+
+        for i in skill_info:
+            i = int(i)
+            skill_obj = Skill.query.get(i)
+            skills.append((skill_obj.skill_id, skill_obj.skill_name))
+
+        num_skills = list(range(1, skills_num+1))
+        other_list = compliment_list(num_skills, 6)
+
+        return render_template("add_skills", template_id=template_id, skills=skills, num_skills=num_skills, other_list=other_list, char_id=char_id,
+            user_id=user_id)
+    else:
 
 
+
+        growth_list = growth_lst(growth_item)
+
+        # flash('Character successfully saved')
+
+        spell_objects = db.session.query(Class_spell.template_id, Class_spell.spell_id).all()
+
+        rel_spells = []
+        specific_spells = []
+
+
+        for i in spell_objects:
+            if i[0] == template_id:
+                rel_spells.append(i[1])
+
+        for i in rel_spells:
+            x = Spell.query.get(i)
+            if int(x.int_requirement) <= character_level:
+                specific_spells.append((x.int_requirement, x.spell_name, x.spell_id))
+        
+
+        no_spells=list(range(len(growth_list)))
+        unvariety = compliment_list(no_spells, 8)
+
+    return render_template("add_spells", growth_list=growth_list, spell_objects=spell_objects, specific_spells=specific_spells, 
+        unvariety=unvariety, template_id=template_id, user_id=user_id, char_id=char_id) 
+
+@app.route('/add_skills_after_spells', methods=["POST"])
+def skills_after_spells():
+
+    char_id = int(request.form.get('char_id'))
+    spell_id_0 = int(request.form.get('spell_id_0'))
+    spell_id_1 = int(request.form.get('spell_id_1'))
+    spell_id_2 = int(request.form.get('spell_id_2'))
+    spell_id_3 = int(request.form.get('spell_id_3'))
+    spell_id_4 = int(request.form.get('spell_id_4'))
+    spell_id_5 = int(request.form.get('spell_id_5'))
+    spell_id_6 = int(request.form.get('spell_id_6'))
+    spell_id_7 = int(request.form.get('spell_id_7'))
+    template_id = int(request.form.get('template_id'))
+    user_id = int(request.form.get('user_id'))
+
+    this_template = Template.query.filter_by(template_id=template_id).first()
+
+    skills = []
+
+    skill_nfo, skills_num = this_template.skill_choices, this_template.num_skills
+    skill_info = skill_nfo.rsplit(', ')
+
+    for i in skill_info:
+        i = int(i)
+        skill_obj = Skill.query.get(i)
+        skills.append((skill_obj.skill_id, skill_obj.skill_name))
+
+    num_skills = list(range(1, skills_num+1))
+    other_list = compliment_list(num_skills, 6)
+
+    spell_ids = [spell_id_0, spell_id_1, spell_id_2, spell_id_3, spell_id_4, spell_id_5, spell_id_6, spell_id_7]
+    commit_spell(spell_ids, char_id)
+
+    return render_template("add_skills_after_spells", template_id=template_id, user_id=user_id, 
+        char_id=char_id, other_list=other_list, num_skills=num_skills, skills=skills) 
+
+@app.route('/commit_char_true', methods=["POST"])
+def commit_show_char():
+    
+    char_id = int(request.form.get('char_id'))
+    skill_id_1 = int(request.form.get('skill_id_1'))
+    skill_id_2 = int(request.form.get('skill_id_2'))
+    skill_id_3 = int(request.form.get('skill_id_3'))
+    skill_id_4 = int(request.form.get('skill_id_4'))
+    skill_id_5 = int(request.form.get('skill_id_5'))
+    template_id = int(request.form.get('template_id'))
+    user_id = int(request.form.get('user_id'))
+
+    skill_ids = [skill_id_1, skill_id_2, skill_id_3, skill_id_4, skill_id_5]
+    commit_skill(skill_ids, char_id)
+
+    return redirect('/')
 
 @app.route('/log_in', methods=["GET"])
 def log_in():

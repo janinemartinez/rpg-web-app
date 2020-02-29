@@ -20,7 +20,6 @@ from model import (
 
 def load_spell_class():
 
-5
 
     for spell in Spell.query.all():
         for name in spell.dnd_class.split(', '):

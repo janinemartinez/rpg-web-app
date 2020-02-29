@@ -98,7 +98,7 @@ if __name__ == "__main__":
 
 
 
-    load_json_file("JSON/template.json", Template,
+    load_json_file("JSON/template2.json", Template,
     key_map={
         "name": "template_name",
         "temp_desc": "temp_desc",
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     })
 
 
-    load_json_file("JSON/spells.json", Spell,
+    load_json_file("JSON/spells2.json", Spell,
     key_map={
         "name": "spell_name",
         "spell_desc": "spell_desc",
