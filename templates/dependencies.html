@@ -9,7 +9,7 @@
 
       <p>Hit Points</p>
 
-      <p>Based on your constitution score constitution modifier is {{ mod }}. We rolled two random {{ hitdice }} sided dice. Your rolls were {{ first_roll }} and {{ second_roll }}. We selected the higher roll, and added your constitution modifier giving you {{ hit_points }} hitpoints. Hit submit to save your hit points.
+      <p>Based on your constitution score constitution modifier is {{ mod }}. Your character classes hit dice give you {{ hitdice }} hit points. Added to your hit dice is your constitution score giving you {{ hit_points }} hit points. Hit submit to save your hit points.
 
             <form action = '/dependencies' method="POST">
 
@@ -27,9 +27,9 @@
                   <input type="hidden" name="intelligence" id="intelligence" value="{{ intelligence }}">
                   <input type="hidden" name="wisdom" id="wisdom" value="{{ wisdom }}">
                   <input type="hidden" name="charisma" id="charisma" value="{{ charisma }}">
-                  <input type="hidden"  name="character_level" id="character_level" value= "{{ experience_points }}">
+                  <input type="hidden"  name="character_level" id="character_level" value= "{{character_level }}">
                   <input type="hidden"  name="char_align" id="char_align" value= "{{ char_align }}">
-                  <input type="hidden"  name="experience_points" id="experience_points" value= "{{ character_level }}">
+                  <input type="hidden"  name="experience_points" id="experience_points" value= "{{ experience_points }}">
                   <input type="hidden"  name="hit_points" id="hit_points" value= "{{ hit_points }}">
                   <input type="submit">
             </form>

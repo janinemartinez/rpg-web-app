@@ -123,7 +123,8 @@ if __name__ == "__main__":
         "speed_desc": "speed_nfos",
         "languages": "languages",
         "vision": "vision",
-        "traits": "traits"
+        "traits": "traits",
+        "speed": "speed"
     })
 
 

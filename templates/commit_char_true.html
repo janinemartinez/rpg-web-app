@@ -1,11 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Skills</title>
+    <title>Character Sheet</title>
 </head>
 <body>
+<h1>Character Sheet</h1>
 
+<h4>Name: {{ character[0] }}
+	<br>Race : {{ race[0] }}
+	<br>Class : {{ template_name }}
+	<br>Character Alignment : {{ character[1] }}
+	<br>Age : {{ character[4] }}
+	<br>Experienct Points : {{ character[5] }}
+	<br>Character Level : {{ character[6] }}
+	<br>Character Speed : {{ race[1]}}
+	{% if spells_known|int() != 0|int() %}
+	<br>Spells Known : {{ spells_known }}
+	{% endif %}
+</h4>
 
+<h3>Strength : {{ attributes[1]}}  Dexterity : {{ attributes[1]}} Constitution : {{ attributes[2]}} Wisdom : {{ attributes[3]}} Intelligence : {{ attributes[4] }} Charisma : {{attributes[5]}}</h3>
+<h3> Hit Points : {{ character[3] }}
+<h3>Character Skills</h3>
+{% for i in skills_obj %}
+	<li>{{ i[1] }} : {{ i[0]}}</li>
+{% endfor %}
 
+{% if spells_obj|length > 0 %}
+<h3>Character Spells</h3>
+{% endif %}
+{% for i in spells_obj %}
+	<li>{{ i[1] }} : {{ i[0]}}</li>
+{% endfor %}
+<h3>Feats & Special Abilities</h3>
+{% if sneak|string() != "POOP"|string() %}
+<h4><li>Sneak Attack : {{ sneak }}</li></h4>
+{% endif %}
+{% if monk[0]|int() != 0|int() %}
+<h4><li>Ki Points : {{ monk[0] }}</li></h4>
+<h4><li>Unarmored Movement : {{ monk[1] }}</li></h4>
+{% endif %}
+{% if barbarian[0]|int() != 0|int() %}
+<h4><li>Rages : {{ barbarian[0] }}</li></h4>
+<h4><li>Rage Damage : {{ barbarian[1] }}</li></h4>
+{% endif %}
+{% for feat in feat_list %}
+<h4><li>{{ feat }}</li></h4>
+{% endfor %}
+<h3>Description</h3>
+<p>{{ character[2] }}</p>
+<h3><a href="/">Homepage</a></h3>
 </body>
 </html>

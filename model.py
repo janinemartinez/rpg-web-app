@@ -69,7 +69,6 @@ class Attribute(db.Model):
     __tablename__ = "attributes"
 
     attributes_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    # char_id = db.Column(db.Integer, db.ForeignKey('characters.char_id'), nullable=False)
     strength = db.Column(db.Integer, nullable=False)
     dexterity = db.Column(db.Integer, nullable=False)
     constitution = db.Column(db.Integer, nullable=False)
@@ -82,7 +81,6 @@ class Attribute(db.Model):
     def __repr__(self):
             """Return a human-readable representation of a Human."""
             return f"""<Attribute attributes_id={self.attributes_id}
-                        char_id={self.char_id}
                         strength={self.strength}
                         dexterity={self.dexterity}
                         constitution={self.constitution}
@@ -112,7 +110,7 @@ class Template(db.Model):
     def __repr__(self):
 
         return f"""<Template template_id={self.template_id}
-                    template_name={self.template_id}
+                    template_name={self.template_name}
                     temp_desc={self.temp_desc}
                     hit_dice={self.hit_dice}
                     num_skills={self.num_skills}
@@ -198,8 +196,8 @@ class Char_skill(db.Model):
     skill_id = db.Column(db.Integer, db.ForeignKey('skills.skill_id'), nullable=False)
     char_id = db.Column(db.Integer, db.ForeignKey('characters.char_id'), nullable=False)
 
-    # skill_rel = db.relationship("Skill", backref=db.backref("char_skills", order_by=c_skill_id))
-    # char_rel = db.relationship("Character", backref=db.backref("char_skills", order_by=c_skill_id))
+    skill_rel = db.relationship("Skill", backref=db.backref("char_skills", order_by=c_skill_id))
+    char_rel = db.relationship("Character", backref=db.backref("char_skills", order_by=c_skill_id))
 
 class Char_spell(db.Model):
 
@@ -209,8 +207,8 @@ class Char_spell(db.Model):
     spell_id = db.Column(db.Integer, db.ForeignKey('spells.spell_id'), nullable=False)
     char_id = db.Column(db.Integer, db.ForeignKey('characters.char_id'), nullable=False)
 
-    # spell_rel = db.relationship("Spell", backref=db.backref("char_spells", order_by=c_spell_id))
-    # char_rel = db.relationship("Character", backref=db.backref("char_spells", order_by=c_spell_id))
+    spell_rel = db.relationship("Spell", backref=db.backref("char_spells", order_by=c_spell_id))
+    char_rel = db.relationship("Character", backref=db.backref("char_spells", order_by=c_spell_id))
 
 class Class_spell(db.Model):
     """spells and the classes that can weild them"""
@@ -241,6 +239,7 @@ class Char_species(db.Model):
     age_nfos = db.Column(db.Text, nullable=False)
     align_nfos = db.Column(db.Text, nullable=False)
     size_nfos = db.Column(db.Text, nullable=False)
+    speed = db.Column(db.Integer, nullable=False)
     speed_nfos = db.Column(db.Text, nullable=False)
     languages = db.Column(db.Text, nullable=False)
     vision = db.Column(db.Text, nullable=False)
@@ -252,6 +251,7 @@ class Char_species(db.Model):
             return f"""<Char_species spec_id={self.spec_id}
                         spec_type={self.spec_type}
                         age_nfos={self.size_nfos}
+                        speed={self.speed}
                         align_nfos={self.align_nfos}
                         size_nfos={self.size_nfos}
                         languages={self.languages}
@@ -268,7 +268,7 @@ def connect_to_db(app):
 
     # Configure to use our PstgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///role_playing'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     db.app = app
     db.init_app(app)
 
