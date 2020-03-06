@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +16,7 @@
 	<br>Experienct Points : {{ character[5] }}
 	<br>Character Level : {{ character[6] }}
 	<br>Character Speed : {{ race[1]}}
+	<br>Proficiency Bonus : {{ prof }}
 	{% if spells_known|int() != 0|int() %}
 	<br>Spells Known : {{ spells_known }}
 	{% endif %}
@@ -52,3 +55,4 @@
 <h3><a href="/">Homepage</a></h3>
 </body>
 </html>
+{% endblock %}

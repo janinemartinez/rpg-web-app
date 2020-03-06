@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,6 +44,40 @@
                   <input type="hidden"  name="char_align" id="char_align" value= "{{ char_align }}">
                   <input type= "submit">
             </form>
+<script>
 
+    $('#rollDiceBtn').one('click', () => {
+
+        const die1 = $('#die1');
+        const die2 = $('#die2');
+
+        const status = $('#status');
+
+        var d1Sides = Number($('#characterInfo').data('die1'));
+
+        var d1 = Math.floor(Math.random() * {{ hit_dice }}) + 1;
+        var d2 = Math.floor(Math.random() * {{ hit_dice }}) + 1;
+        var diceTotal = d1 + d2;
+        die1.html(d1);
+        die2.html(d2);
+        if (d1 > d2)    {
+            var dhp = d1;
+        }   else {
+            var dhp = d2;
+        }
+        
+        var modHp = {{ conmod }} + dhp;
+
+        var curHp = modHp + {{ hit_points }}
+
+        status.html(`You rolled a ${d1} and ${d2}. 
+            We've factored in your Constitution Modifier of {{ conmod }} making your current hit points ${curHp}. `);
+
+        $('#hp').val(curHp);
+    });
+
+
+</script>
 </body>
 </html>
+{% endblock %}

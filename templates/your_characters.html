@@ -4,14 +4,14 @@
 <h1>Your Characters</h1>
 
 
-<table style="width: 75%">
+<table style="width: 65%">
 
 <tr><h3>
 	<th align="left">Name</th>
 	<th align="left">Class</th>
 	<th align="left">Species</th>
-	<th align="left">Level</th>
-	<th align="left">Experience Points</th>
+	<th>Level</th>
+	<th>XP</th>      
 	</h3>
 </tr>
 	{% for i in user_chars_expand %}
@@ -39,11 +39,9 @@
 <input type="hidden" name="experience_points" id="user_id"value="{{ i[5] }}" />
 <input type="hidden" name="character_level" id="character_level" value="{{ i[6] }}" />
 <input type="hidden" name="attributes_id" id="attributes_id" value="{{ i[7] }}" />
-<input type="hidden" name="user_chars_expand" value="{{ user_chars_expand }}">
-<input type="text" name="num_xp">
+<input type="text" name="num_xp" size = "6" value="0">
 <button type="submit">ADD EXPERIENCE POINTS</button></form></th></h5>
 </tr>
 {% endfor %}
 </table>
-
 {% endblock %}

@@ -27,6 +27,8 @@ app.secret_key = "tiger&luna"
 
 app.jinja_env.undefined = StrictUndefined
 
+def convert(lst):
+    return eval(lst)
 
 def retrieve_char_spells(char_id):
 
@@ -50,6 +52,15 @@ def retrieve_spells(spells_array):
             spells.append((spell_desc, spell_name))
 
     return spells
+
+def char_query(charid):
+
+    return Character.query.filter_by(char_id=charid).first()
+
+def template_query(tempid):
+
+    return Template.query.filter_by(template_id=tempid).first()
+
 
 def retrieve_user_characters(charlst, user):
 
@@ -137,6 +148,24 @@ def retrieve_character(char_id):
 
     return spec_id, character, [name, char_align, flavor_txt, hit_points, age, experience_points, character_level], character_level
 
+def prof_bon(lvl):
+
+    prof_dict = {1:2, 2:2, 3:2, 4:2, 5:3, 6:3, 7:3, 8:3, 9:4, 10:4, 11:4, 12:4, 13:5, 14:5, 15:5, 16:5, 17:6, 18:6, 19:6, 20:6}
+    return prof_dict[lvl]
+
+def level_up(xp, level):
+
+    lvl_lst = [0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 
+    265000, 305000, 355000, 120000000]
+    if lvl_lst[level] <= xp:
+        return True
+
+    return False
+
+def attribute_incr(level):
+
+    water_marks = [4, 8, 12, 16, 19]
+    return level in water_marks
 
 def modifiers(attribute):
 
@@ -250,11 +279,44 @@ def xp_add():
     character_level = int(request.form.get('character_level'))
     experience_points = int(request.form.get('character_level'))
     num_xp = int(request.form.get('num_xp'))
-    template_id = request.form.get('template_id')
+    template_id = int(request.form.get('template_id'))
     user_id = int(request.form.get('user_id'))
     user_chars_expand = request.form.getlist('user_chars_expand')
 
-    return render_template("your_characters.html", user_chars_expand=user_chars_expand)
+
+    char = char_query(char_id)
+    char.experience_points += num_xp
+    db.session.add(char)
+    db.session.commit()
+    all_characters = db.session.query(Character.char_id, Character.char_name, Character.user_id, 
+        Character.template_id, Character.spec_id, Character.experience_points, Character.character_level, 
+        Character.attributes_id).all()
+    user_chars = retrieve_user_characters(all_characters, user_id)
+    user_chars_expand = append_user_characters(user_chars)
+    char = char_query(char_id)
+    character_level = char.character_level
+    upgrade = level_up(char.experience_points, char.character_level)
+    attribute_names = ['strength', 'dexterity', 'constitution', 'wisdom', 'intelligence', 'charisma']
+    if upgrade == False:
+        return render_template("your_characters.html", user_chars_expand=user_chars_expand)
+
+    else:
+        char.character_level += 1
+        db.session.add(char)
+        db.session.commit()
+
+        return render_template("level_up.html", attributes=retrieve_attributes(attributes_id), character_level=character_level, 
+                                conmod=modifiers(retrieve_attributes(attributes_id)[2]), hit_points=char.hit_points, 
+                                hit_dice=template_query(template_id).hit_dice, attrib_plus=attribute_incr(character_level), 
+                                attribute_names=attribute_names)
+
+@app.route('/go_to_spells', methods=["POST"])
+def spell_render():
+
+    hidden1 = request.form.get('hidden1')
+
+    return redirect('/')
+
 
 @app.route('/character_start')
 def start_making_character():
@@ -494,7 +556,7 @@ def commit_show_char():
     growth_items = json.loads(this_template.growth_table)
     growth_item = growth_items[f'{character_level}']
     feats = json.loads(this_template.features_table)
-
+    prof = prof_bon(character[6])
     sneak = growth_item.get("sneak_attack", "POOP")
     rages = sum([item.get("rages", 0) for lvl, item in growth_items.items() if int(lvl) <= character_level])
     rage_damage = sum([item.get("rage_damage", 0) for lvl, item in growth_items.items() if int(lvl) <= character_level])
@@ -506,7 +568,7 @@ def commit_show_char():
     return render_template("commit_char_true.html", attributes_id=attributes_id, template_id=template_id, this_template=this_template, 
         attributes=attributes, hitdice=hitdice, character=character, race=race, skills_obj=skills_obj, char_id=char_id, 
         spells_obj=spells_obj, sneak=sneak, barbarian=barbarian, spells_known=spells_known, feat_list=feat_list, template_name=template_name, 
-        monk=monk)
+        monk=monk, prof=prof)
 
 @app.route('/log_in', methods=["GET"])
 def log_in():

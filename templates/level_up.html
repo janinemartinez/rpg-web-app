@@ -1,18 +1,83 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
 <html>
 <head>
+
     <title>Level Up!</title>
+
+<style type="text/css">
+div.dice{
+    float:left;
+    width:32px;
+    background:white;
+    border:black 2px solid;
+    padding:10px;
+    border-radius: 5px;
+    font-size:24px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    text-align:center;
+    margin:5px;
+}
+</style>
+
 </head>
 <body>
+    {{ attrib_plus }}
+  <h2>Your character is now level {{ character_level }}.</h2>
+  <div id="characterInfo" data-die-1="6"></div>
 
-  <h2>Build your character.</h2>
+<form action="/go_to_spells" method="POST" >
+<input type="hidden" name="hp" id="hp" value=""  />
 
-    <p>Level Up!</p>
+<div id="die1" class="dice">0</div><button id="rollDiceBtn">Roll Dice</button>
+<div id="die2" class="dice">0</div><button type="submit" name="btn_test" >Submit HP</button>
+<br><br><br>
+<div><h4>Roll two D{{ hit_dice }}, and the larger of the two will contribute to your new hip points.</h4>
+<h4 id="status" style="clear:left;"></h4></div>
+
+{% if attrib_plus == true %}
+{% for n in range(6) %}
+<label>{{ attribute_names[n] }}</label>
+<input class="attributes" type="number" id="{{ attributes[n] }}" name="{{ attributes[n] }}" min="{{ attributes[n] }}" max="{{ attributes[n] + 2 }}" value="{{attributes[n]}}" />
+{% endfor %}
+{% endif %}
+<input type="button" onClick="saveValue('stepper1')" value="Submit" />
+</form>
+<script>
+
+    $('#rollDiceBtn').one('click', () => {
+
+        const die1 = $('#die1');
+        const die2 = $('#die2');
+
+        const status = $('#status');
+
+        var d1Sides = Number($('#characterInfo').data('die1'));
+
+        var d1 = Math.floor(Math.random() * {{ hit_dice }}) + 1;
+        var d2 = Math.floor(Math.random() * {{ hit_dice }}) + 1;
+        var diceTotal = d1 + d2;
+        die1.html(d1);
+        die2.html(d2);
+        if (d1 > d2)    {
+            var dhp = d1;
+        }   else {
+            var dhp = d2;
+        }
+        
+        var modHp = {{ conmod }} + dhp;
+
+        var curHp = modHp + {{ hit_points }}
+
+        status.html(`You rolled a ${d1} and ${d2}. 
+            We've factored in your Constitution Modifier of {{ conmod }} making your current hit points ${curHp}. `);
+
+        $('#hp').val(curHp);
+    });
 
 
+</script>
 </body>
 </html>
-
-
-</body>
-</html>
+{% endblock %}
