@@ -2,10 +2,25 @@
 {% block content %}
 
   <h2>New User Registration</h2>
+<table>
+	<form action = '/register' method="POST">
+		<tr>
+	    	<th align="right"><label>Email</label></th>
+	    	<th><input type="text" name = "email"></th>
+	    </tr>
+	    <tr>
+	    	<td align="right"><label>Password</label></td>
+	    	<td><input type="password" name = "password"></td>
+	    </tr>
+	    <tr>
+	    	<td align="right"><label>Retype</label></td>
+	    	<td><input type="password" name = "password2"></td>
+	    </tr>
+	    <tr>
+	    	<td><input type = "submit"></td>
+	    </tr>
 
-  <form action = '/register' method="POST">
-    <label>Email</label><input type="text" name = "email">
-    <label>Password</label><input type="password" name = "password">
-    <input type = "submit">
+	</form>
+</table>
 
 {% endblock %}

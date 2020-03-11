@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+<html>
+<head>
+
+    <title>Level Up!</title>
+
+<style type="text/css">
+div.dice{
+    float:left;
+    width:32px;
+    background:white;
+    border:black 2px solid;
+    padding:10px;
+    border-radius: 5px;
+    font-size:24px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    text-align:center;
+    margin:5px;
+}
+</style>
+
+</head>
+<body>
+
+  <h2>Your character is now level {{ character_level }}.</h2>
+  <div id="characterInfo" data-die-1="6"></div>
+
+<form action="/go_to_spells" method="POST" >
+<input type="hidden" name="hp" id="hp" value=""  />
+
+<div id="die1" class="dice">0</div><button id="rollDiceBtn">Roll Dice</button>
+<div id="die2" class="dice">0</div>
+<br><br><br>
+<div><h4>Roll two D{{ hit_dice }}, and the larger of the two will contribute to your new hit points.</h4>
+<h4 id="status" style="clear:left;"></h4></div>
+
+{% if (attrib_plus == true) or true %}
+{% for n in range(6) %}
+<label>{{ attribute_names[n] }}</label>
+<input class="attributes" type="number" id="{{ attribute_names[n] }}" name="{{ attribute_names[n] }}" min="{{ attributes[n] }}" max="20" value="{{attributes[n]}}" />
+{% endfor %}
+{% endif %}
+<input type="button"  value="Submit" />
+</form>
+<script>
+
+    const attributes = [
+        "strength",
+        "dexterity",
+        "constitution",
+        "intelligence",
+        "wisdom",
+        "charisma"
+    ];
+
+    var attributes_prev = [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ];
+
+    const max_allocated = 2;
+    var pts_allocated = 0;
+
+    for (i = 0; i < 6; i++) {
+        const attrib_id = `#${attributes[i]}`;
+        const attrib_min = $(attrib_id).val();
+        // register handler for input changes to each number input
+        $(attrib_id).on("input", () => {
+            // get the current value of the number input
+            var attrib_val = $(this).val();
+            // if there isn't a previous value
+            if (attributes_prev[i] == null) {
+                // set the previous value to the min
+                attributes_prev[i] = attrib_min;
+            }
+            var attrib_prev = attributes_prev[i];
+            alert(`attrib_val: ${attrib_val} / attrib_prev: ${attrib_prev} / attrib_min: ${attrib_min} / pts_allocated: ${pts_allocated} / max_allocated: ${max_allocated}`);
+
+            if (attrib_val > attrib_prev) {
+                // going up?
+                if (pts_allocated < max_allocated) {
+                    // allow allocation, track increment
+                    pts_allocated++;
+                    $(this).attr("min", attrib_val);
+                } else {
+                    // deny allocation, reset input to previous value
+                    $(attrib_id).attr("min")
+                }
+            } else {
+                // going down is easy...
+                pts_allocated--;
+            }
+            attributes_prev[i] = attrib_val; // remember the current value for next run
+        });
+    }
+
+    $('#rollDiceBtn').one('click', () => {
+
+        const die1 = $('#die1');
+        const die2 = $('#die2');
+
+        const status = $('#status');
+
+        var d1Sides = Number($('#characterInfo').data('die1'));
+
+        var d1 = Math.floor(Math.random() * {{ hit_dice }}) + 1;
+        var d2 = Math.floor(Math.random() * {{ hit_dice }}) + 1;
+        var diceTotal = d1 + d2;
+        die1.html(d1);
+        die2.html(d2);
+        if (d1 > d2)    {
+            var dhp = d1;
+        }   else {
+            var dhp = d2;
+        }
+        
+        var modHp = {{ conmod }} + dhp;
+
+        var curHp = modHp + {{ hit_points }};
+
+        status.html(`You rolled a ${d1} and ${d2}. 
+            We've factored in your Constitution Modifier of {{ conmod }} making your current hit points ${curHp}. `);
+
+        $('#hp').val(curHp);
+    });
+
+
+</script>
+</body>
+</html>
+{% endblock %}

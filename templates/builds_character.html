@@ -1,36 +1,114 @@
 {% extends 'base.html' %}
-{% block content %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Attributes</title>
+
+<style type="text/css">
+
+</style>
 </head>
 <body>
+{% block content %}
 
-  <h2>Build your character.</h2>
 
-      <p>Roll your attributes using 4d6 and throwing out the lowest roll in order to compile an attribute. Once you have completed this process six times you may insert them into the fields you want them to populate, then hit submit.,</p>
+      <p>Roll your attributes using 4d6 and throwing out the lowest roll in order to compile an attribute. Once you have completed this process six times you may insert them into the fields you want them to populate, then hit submit.,</p></div>
 
+<table>
+      <tr>
+            <th>
+                  <h4 valign="bottom" align="left">Strength</h4>
+                  <div id="die1" class="dice">0</div>
+                  <div id="die2" class="dice">0</div>
+                  <div id="die3" class="dice">0</div>
+                  <div id="die4" class="dice">0</div>
+            </th>
+            <th>
+                  <button id="rollDiceStr">Roll Dice</button>
+            </th>
+            <th align="left">  
+                  <h4 id="strStatus" style="clear:left;"></h4></div>
+            </th>
+      </tr>
+      <tr>
+            <th>
+                  <h4 align="left">Dexterity</h4>
+                  <div id="die5" class="dice">0</div>
+                  <div id="die6" class="dice">0</div>
+                  <div id="die7" class="dice">0</div>
+                  <div id="die8" class="dice">0</div>
+            </th>
+            <th>
+                  <button id="rollDiceDex">Roll Dice</button>
+            </th>
+            <th align="left"> 
+                  <h4 id="dexStatus" style="clear:left;"></h4></div>
+            </th>
+      </tr>
+      <tr>
+            <th>
+                  <h4 align="left">Constitution</h4>
+                  <div id="die9" class="dice">0</div>
+                  <div id="die10" class="dice">0</div>
+                  <div id="die11" class="dice">0</div>
+                  <div id="die12" class="dice">0</div>
+            </th>
+            <th>
+                  <button id="rollDiceCon">Roll Dice</button>
+            </th>
+            <th align="left">
+                  <h4 id="conStatus" style="clear:left;"></h4></div>
+            </th>
+      </tr>
+      <tr>
+            <th>
+                  <h4 align="left">Intelligence</h4>
+                  <div id="die13" class="dice">0</div>
+                  <div id="die14" class="dice">0</div>
+                  <div id="die15" class="dice">0</div>
+                  <div id="die16" class="dice">0</div>
+            </th>
+            <th>
+                  <button id="rollDiceInt">Roll Dice</button>
+            </th>
+            <th align="left">
+                  <h4 id="intStatus" style="clear:left;"></h4></div>
+            </th>
+      </tr>
+      <tr>
+            <th>
+                  <h4 align="left">Wisdom</h4>
+                  <div id="die17" class="dice">0</div>
+                  <div id="die18" class="dice">0</div>
+                  <div id="die19" class="dice">0</div>
+                  <div id="die20" class="dice">0</div>
+            </th>
+            <th>
+                  <button id="rollDiceWis">Roll Dice</button>
+            </th>
+            <th align="left">
+                  <h4 id="wisStatus" style="clear:left;"></h4></div>
+            </th>
+      </tr>
+      <tr>
+            <th>
+                  <h4 align="left">Charisma</h4>
+                  <div id="die21" class="dice">0</div>
+                  <div id="die22" class="dice">0</div>
+                  <div id="die23" class="dice">0</div>
+                  <div id="die24" class="dice">0</div>
+            </th>
+            <th>
+                  <button id="rollDiceCha">Roll Dice</button>
+            </th>
+            <th align="left">
+                  <h4 id="chaStatus" style="clear:left;"></h4></div>
+            </th>
+      </tr>
+      
+</table>
             <form action = '/builds_character' method="POST">
-                  
-                  <input type="number" name="strength"/>
-                  <label>Strength:</label>
-                  <br>
-                  <input type="number" name="dexterity">
-                  <label>Dexterity:</label>
-                  <br>
-                  <input type="number" name="constitution">
-                  <label>Constitution:</label>
-                  <br>
-                  <input type="number" name="intelligence">
-                  <label>Intelligence:</label>
-                  <br>
-                  <input type="number" name="wisdom">
-                  <label>Wisdom:</label>
-                  <br>
-                  <input type="number" name="charisma">
-                  <label>Charisma:</label>
-                  <br>
 
 
                   <input type="hidden"  name="template_id" id="template_id" value= "{{ template_id }}">
@@ -42,40 +120,160 @@
                   <input type="hidden"  name="character_level" id="character_level" value= "1">
                   <input type="hidden"  name="experience_points" id="experience_points" value= "0">
                   <input type="hidden"  name="char_align" id="char_align" value= "{{ char_align }}">
+                  <input type="hidden"  name="strength" id="strength" value=""  />
+                  <input type="hidden"  name="dexterity" id="dexterity" value=""  />
+                  <input type="hidden"  name="constitution" id="constitution" value=""  />
+                  <input type="hidden"  name="intelligence" id="intelligence" value=""  />
+                  <input type="hidden"  name="wisdom" id="wisdom" value=""  />
+                  <input type="hidden"  name="charisma" id="charisma" value=""  />
                   <input type= "submit">
             </form>
 <script>
 
-    $('#rollDiceBtn').one('click', () => {
+    $('#rollDiceStr').one('click', () => {
 
         const die1 = $('#die1');
         const die2 = $('#die2');
+        const die3 = $('#die3');
+        const die4 = $('#die4');
 
-        const status = $('#status');
+        const strStatus = $('#strStatus');
 
-        var d1Sides = Number($('#characterInfo').data('die1'));
 
-        var d1 = Math.floor(Math.random() * {{ hit_dice }}) + 1;
-        var d2 = Math.floor(Math.random() * {{ hit_dice }}) + 1;
-        var diceTotal = d1 + d2;
+        var d1 = Math.floor(Math.random() * 6) + 1;
+        var d2 = Math.floor(Math.random() * 6) + 1;
+        var d3 = Math.floor(Math.random() * 6) + 1;
+        var d4 = Math.floor(Math.random() * 6) + 1;
         die1.html(d1);
         die2.html(d2);
-        if (d1 > d2)    {
-            var dhp = d1;
-        }   else {
-            var dhp = d2;
-        }
-        
-        var modHp = {{ conmod }} + dhp;
+        die3.html(d3);
+        die4.html(d4);
+        var less = Math.min(d1, d2, d3, d4)
+        var strength = d1 + d2 + d3 + d4 - less
+        strStatus.html(`${strength}`);
 
-        var curHp = modHp + {{ hit_points }}
-
-        status.html(`You rolled a ${d1} and ${d2}. 
-            We've factored in your Constitution Modifier of {{ conmod }} making your current hit points ${curHp}. `);
-
-        $('#hp').val(curHp);
+        $('#strength').val(strength);
     });
+    $('#rollDiceDex').one('click', () => {
 
+        const die5 = $('#die5');
+        const die6 = $('#die6');
+        const die7 = $('#die7');
+        const die8 = $('#die8');
+
+        const dexStatus = $('#dexStatus');
+
+
+        var d5 = Math.floor(Math.random() * 6) + 1;
+        var d6 = Math.floor(Math.random() * 6) + 1;
+        var d7 = Math.floor(Math.random() * 6) + 1;
+        var d8 = Math.floor(Math.random() * 6) + 1;
+        die5.html(d5);
+        die6.html(d6);
+        die7.html(d7);
+        die8.html(d8);
+        var less = Math.min(d5, d6, d7, d8)
+        var dexterity = d5 + d6 + d7 + d8 - less
+        dexStatus.html(`${dexterity}`);
+
+        $('#dexterity').val(dexterity);
+    });
+    $('#rollDiceCon').one('click', () => {
+
+        const die9 = $('#die9');
+        const die10 = $('#die10');
+        const die11 = $('#die11');
+        const die12 = $('#die12');
+
+        const conStatus = $('#conStatus');
+
+
+        var d9 = Math.floor(Math.random() * 6) + 1;
+        var d10 = Math.floor(Math.random() * 6) + 1;
+        var d11 = Math.floor(Math.random() * 6) + 1;
+        var d12 = Math.floor(Math.random() * 6) + 1;
+        die9.html(d9);
+        die10.html(d10);
+        die11.html(d11);
+        die12.html(d12);
+        var less = Math.min(d9, d10, d11, d12)
+        var constitution = d9 + d10 + d11 + d12 - less
+        conStatus.html(`${constitution}`);
+
+        $('#constitution').val(constitution);
+    });
+    $('#rollDiceInt').one('click', () => {
+
+        const die13 = $('#die13');
+        const die14 = $('#die14');
+        const die15 = $('#die15');
+        const die16 = $('#die16');
+
+        const intStatus = $('#intStatus');
+
+
+        var d13 = Math.floor(Math.random() * 6) + 1;
+        var d14 = Math.floor(Math.random() * 6) + 1;
+        var d15 = Math.floor(Math.random() * 6) + 1;
+        var d16 = Math.floor(Math.random() * 6) + 1;
+        die13.html(d13);
+        die14.html(d14);
+        die15.html(d15);
+        die16.html(d16);
+        var less = Math.min(d13, d14, d15, d16)
+        var intelligence = d13 + d14 + d15 + d16 - less
+        intStatus.html(`${intelligence}`);
+
+        $('#intelligence').val(intelligence);
+    });
+    $('#rollDiceWis').one('click', () => {
+
+        const die17 = $('#die17');
+        const die18 = $('#die18');
+        const die19 = $('#die19');
+        const die20 = $('#die20');
+
+        const wisStatus = $('#wisStatus');
+
+
+        var d17 = Math.floor(Math.random() * 6) + 1;
+        var d18 = Math.floor(Math.random() * 6) + 1;
+        var d19 = Math.floor(Math.random() * 6) + 1;
+        var d20 = Math.floor(Math.random() * 6) + 1;
+        die17.html(d17);
+        die18.html(d18);
+        die19.html(d19);
+        die20.html(d20);
+        var less = Math.min(d17, d18, d19, d20)
+        var wisdom = d17 + d18 + d19 + d20 - less
+        wisStatus.html(`${wisdom}`);
+
+        $('#wisdom').val(wisdom);
+    });
+    $('#rollDiceCha').one('click', () => {
+
+        const die21 = $('#die21');
+        const die22 = $('#die22');
+        const die23 = $('#die23');
+        const die24 = $('#die24');
+
+        const chaStatus = $('#chaStatus');
+
+
+        var d21 = Math.floor(Math.random() * 6) + 1;
+        var d22 = Math.floor(Math.random() * 6) + 1;
+        var d23 = Math.floor(Math.random() * 6) + 1;
+        var d24 = Math.floor(Math.random() * 6) + 1;
+        die21.html(d21);
+        die22.html(d22);
+        die23.html(d23);
+        die24.html(d24);
+        var less = Math.min(d21, d22, d23, d24)
+        var charisma = d21 + d22 + d23 + d24 - less
+        chaStatus.html(`${charisma}`);
+
+        $('#charisma').val(charisma);
+    });            
 
 </script>
 </body>

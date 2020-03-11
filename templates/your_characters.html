@@ -31,7 +31,7 @@
 <input type="hidden" name="skill_id_3" id="skill_id_3" value="0" />
 <input type="hidden" name="skill_id_4" id="skill_id_4" value="0" />
 <input type="hidden" name="skill_id_5" id="skill_id_5" value="0" />
-<th><button type="submit">VIEW CHARACTER</button></th></form>
+<th><button type="submit" class="btn btn-secondary btn-sm">VIEW CHARACTER</button></th></form>
 <form action = '/upgrade_portal' method="POST"><th>
 <input type="hidden" name="char_id" id="char_id" value="{{ i[0] }}" />
 <input type="hidden" name="user_id" id="user_id" value="{{ i[2] }}" />
@@ -40,7 +40,7 @@
 <input type="hidden" name="character_level" id="character_level" value="{{ i[6] }}" />
 <input type="hidden" name="attributes_id" id="attributes_id" value="{{ i[7] }}" />
 <input type="text" name="num_xp" size = "6" value="0">
-<button type="submit">ADD EXPERIENCE POINTS</button></form></th></h5>
+<button type="submit" class="btn btn-secondary btn-sm">ADD EXPERIENCE POINTS</button></form></th></h5>
 </tr>
 {% endfor %}
 </table>

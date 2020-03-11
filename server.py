@@ -27,6 +27,37 @@ app.secret_key = "tiger&luna"
 
 app.jinja_env.undefined = StrictUndefined
 
+def add_attribute_inc(attrib1, attrib2, stre, dex, con, inte, wis, cha, attribid):
+
+    bonuses = [attrib1, attrib2]
+
+    attributes = Attribute.query.filter_by(attributes_id=attribid).first()
+
+    for i in bonuses:
+        if attrib1 == "strength":
+            stre += 1
+        elif attrib1 == "dexterity":
+            dex += 1
+        elif attrib1 == "constitution":
+            con += 1
+        elif attrib1 == "intelligence":
+            inte += 1
+        elif attrib1 == "wisdom":
+            wis += 1
+        else:
+            cha += 1
+
+
+    attributes.strength = stre
+    attributes.dexterity = dex
+    attributes.constitution = con
+    attributes.wisdom = wis
+    attributes.intelligence=inte
+    attributes.charisma=cha
+
+    db.session.add(attributes)
+    db.session.commit()
+
 def convert(lst):
     return eval(lst)
 
@@ -164,7 +195,7 @@ def level_up(xp, level):
 
 def attribute_incr(level):
 
-    water_marks = [4, 8, 12, 16, 19]
+    water_marks = [3, 7, 11, 15, 18]
     return level in water_marks
 
 def modifiers(attribute):
@@ -246,20 +277,35 @@ def register_form():
 def register_process():
     email = request.form.get('email')
     password = request.form.get('password')
+    password2 = request.form.get('password2')
+
+    if password2 != password:
+        flash('Passwords do not match.')
+        return redirect('/register')
 
     if not User.query.filter_by(email=email).first():
         user = User(email=email, password=password)
         db.session.add(user)
         db.session.commit()
+        flash('Registration successful')
+
+        return redirect('/')
 
     else:
-        return redirect('/')
-        #placeholder
+        flash('Email already in use.')
 
-    return redirect('/')
+        return redirect('/register')
 
 @app.route('/your_characters')
 def find_characters():
+
+
+    try:
+        assert 'user_id' in session
+    except:
+        AssertionError
+        flash('You must be logged in')
+        return redirect('/')
 
     user_id = int(session.get('user_id'))
 
@@ -273,6 +319,15 @@ def find_characters():
 
 @app.route('/upgrade_portal', methods=["POST"])
 def xp_add():
+
+
+    try:
+        assert 'user_id' in session
+    except:
+        AssertionError
+        flash('You must be logged in')
+        return redirect('/')
+
 
     attributes_id = int(request.form.get('attributes_id'))
     char_id = int(request.form.get('char_id'))
@@ -304,22 +359,25 @@ def xp_add():
         char.character_level += 1
         db.session.add(char)
         db.session.commit()
+        char = char_query(char_id)
 
-        return render_template("level_up.html", attributes=retrieve_attributes(attributes_id), character_level=character_level, 
+        return render_template("level_up.html", attributes=retrieve_attributes(attributes_id), character_level=char.character_level, 
                                 conmod=modifiers(retrieve_attributes(attributes_id)[2]), hit_points=char.hit_points, 
                                 hit_dice=template_query(template_id).hit_dice, attrib_plus=attribute_incr(character_level), 
-                                attribute_names=attribute_names)
-
-@app.route('/go_to_spells', methods=["POST"])
-def spell_render():
-
-    hidden1 = request.form.get('hidden1')
-
-    return redirect('/')
+                                attribute_names=attribute_names, user_id=user_id, template_id=template_id, experience_points=char.experience_points, 
+                                spec_id=char.spec_id, flavor_txt=char.flavor_txt, char_align=char.char_align, 
+                                age=char.age, char_name=char.char_name, attributes_id=char.attributes_id, char_id=char_id)
 
 
 @app.route('/character_start')
 def start_making_character():
+
+    try:
+        assert 'user_id' in session
+    except:
+        AssertionError
+        flash('You must be logged in')
+        return redirect('/')
 
     temp_nfo = db.session.query(Template.template_id, Template.template_name).all()
     spec_nfo = db.session.query(Char_species.spec_id, Char_species.spec_type).all()
@@ -328,7 +386,13 @@ def start_making_character():
 
 @app.route('/character_start', methods=["POST"])
 def first_form():
-    assert 'user_id' in session
+
+    try:
+        assert 'user_id' in session
+    except:
+        AssertionError
+        flash('You must be logged in')
+        return redirect('/')
 
     char_name = request.form.get('char_name')
     template_id = request.form.get('template_id')
@@ -339,14 +403,21 @@ def first_form():
     char_align = request.form.get('char_align')
 
 
-
     return render_template("builds_character.html", user_id=user_id, template_id=template_id, spec_id=spec_id, 
-        char_name=char_name, flavor_txt=flavor_txt, age=age, char_align=char_align)
-
+            char_name=char_name, flavor_txt=flavor_txt, age=age, char_align=char_align)
 
 
 @app.route('/builds_character', methods=["POST"])
 def add_attributes():
+
+
+    try:
+        assert 'user_id' in session
+    except:
+        AssertionError
+        flash('You must be logged in')
+        return redirect('/')
+
 
     age = int(request.form.get('age'))
     char_align = request.form.get('char_align')
@@ -382,8 +453,21 @@ def add_attributes():
 @app.route('/dependencies', methods=["POST"])
 def commit_char_attr():
 
+
+    try:
+        assert 'user_id' in session
+    except:
+        AssertionError
+        flash('You must be logged in')
+        return redirect('/')
+
+
     age = int(request.form.get('age'))
+    attributes_id = request.form.get('attributes_id')
+    attr_inc_1 = request.form.get('attr_inc_1')
+    attr_inc_2 = request.form.get('attr_inc_2')
     char_align = request.form.get('char_align')
+    char_id = request.form.get('char_id')
     character_level = int(request.form.get('character_level'))
     char_name = request.form.get('char_name')
     charisma = int(request.form.get('charisma'))
@@ -399,25 +483,46 @@ def commit_char_attr():
     user_id = int(request.form.get('user_id'))
     wisdom = int(request.form.get('wisdom'))
 
-    #creates attribute object
-    attributes = Attribute(strength=strength, dexterity=dexterity, constitution=constitution, wisdom=wisdom, intelligence=intelligence, charisma=charisma)
+    if character_level == 1:
 
-    #adds attribute object to the session and flushes
-    db.session.add(attributes)
-    db.session.flush()
 
-    #searches attribute in session to retrieve id
-    attrib = db.session.query(Attribute).order_by(Attribute.attributes_id.desc()).first()
-    attributes_id = attrib.attributes_id
+        #creates attribute object
+        attributes = Attribute(strength=strength, dexterity=dexterity, constitution=constitution, wisdom=wisdom, intelligence=intelligence, charisma=charisma)
 
-    #creates character object
-    character = Character(user_id=user_id, char_align=char_align, hit_points=hit_points, template_id=template_id, 
-        spec_id=spec_id, char_name=char_name, flavor_txt=flavor_txt, age=age, experience_points=experience_points,
-        character_level=character_level, attributes_id=attributes_id)
+        #adds attribute object to the session and flushes
+        db.session.add(attributes)
+        db.session.flush()
 
-    #commits character object and attribute object to database
-    db.session.add(character)
-    db.session.commit()
+        #searches attribute in session to retrieve id
+        attrib = db.session.query(Attribute).order_by(Attribute.attributes_id.desc()).first()
+        attributes_id = attrib.attributes_id
+
+        #creates character object
+        character = Character(user_id=user_id, char_align=char_align, hit_points=hit_points, template_id=template_id, 
+            spec_id=spec_id, char_name=char_name, flavor_txt=flavor_txt, age=age, experience_points=experience_points,
+            character_level=character_level, attributes_id=attributes_id)
+
+        #commits character object and attribute object to database
+        db.session.add(character)
+        db.session.commit()
+
+    else:
+
+        attributes_id = int(attributes_id)
+        char_id = int(char_id)
+
+        if attr_inc_1:
+
+            add_attribute_inc(attr_inc_1, attr_inc_2, strength, dexterity, constitution, intelligence, 
+                wisdom, charisma, attributes_id)
+
+
+        character  = char_query(char_id)
+
+        character.hit_points = hit_points
+
+        db.session.add(character)
+        db.session.commit()
 
     #retrieves character id
     char = db.session.query(Character).order_by(Character.char_id.desc()).first()
@@ -444,26 +549,56 @@ def commit_char_attr():
 
     if this_template.spell_ability == "null" or spells == False:
 
+        if character_level != 1:
 
-        skills = []
+                this_template = Template.query.filter_by(template_id=template_id).first()
+                template_name = this_template.template_name
+                hitdice = this_template.hit_dice
+                attributes = retrieve_attributes(attributes_id)
+                spec_id, character_object, character, character_level = retrieve_character(char_id)
+                race = retrieve_race(spec_id)
+                skills_obj = retrieve_char_skills(char_id)
+                skills_obj = retrieve_skills(skills_obj)
+                spells_obj = retrieve_char_spells(char_id)
+                spells_obj = retrieve_spells(spells_obj)
+                growth_items = json.loads(this_template.growth_table)
+                growth_item = growth_items[f'{character_level}']
+                feats = json.loads(this_template.features_table)
+                prof = prof_bon(character[6])
+                sneak = growth_item.get("sneak_attack", "POOP")
+                rages = sum([item.get("rages", 0) for lvl, item in growth_items.items() if int(lvl) <= character_level])
+                rage_damage = sum([item.get("rage_damage", 0) for lvl, item in growth_items.items() if int(lvl) <= character_level])
+                barbarian = [rages, rage_damage]
+                spells_known = sum([item.get("spells_known", 0) for lvl, item in growth_items.items() if int(lvl) <= character_level])
+                feat_list = [item for lvl, item in feats.items() if int(lvl) <= character_level and item != "null"]
+                monk = growth_item.get("Ki Points", 0), growth_item.get("Unarmored Movement", 0)
 
-        skill_nfo, skills_num = this_template.skill_choices, this_template.num_skills
-        skill_info = skill_nfo.rsplit(', ')
+                return render_template("commit_char_true.html", attributes_id=attributes_id, template_id=template_id, this_template=this_template, 
+                    attributes=attributes, hitdice=hitdice, character=character, race=race, skills_obj=skills_obj, char_id=char_id, 
+                    spells_obj=spells_obj, sneak=sneak, barbarian=barbarian, spells_known=spells_known, feat_list=feat_list, template_name=template_name, 
+                    monk=monk, prof=prof)
 
-        for i in skill_info:
-            i = int(i)
-            skill_obj = Skill.query.get(i)
-            skills.append((skill_obj.skill_id, skill_obj.skill_name))
+        else:
 
-        num_skills = list(range(1, skills_num+1))
-        other_list = compliment_list(num_skills, 6)
+            skills = []
 
-        return render_template("add_skills.html", template_id=template_id, skills=skills, num_skills=num_skills, other_list=other_list, char_id=char_id,
-            user_id=user_id, attributes_id=attributes_id)
+            skill_nfo, skills_num = this_template.skill_choices, this_template.num_skills
+            skill_info = skill_nfo.rsplit(', ')
+
+            for i in skill_info:
+                i = int(i)
+                skill_obj = Skill.query.get(i)
+                skills.append((skill_obj.skill_id, skill_obj.skill_name))
+
+            num_skills = list(range(1, skills_num+1))
+            other_list = compliment_list(num_skills, 6)
+
+            return render_template("add_skills.html", template_id=template_id, skills=skills, num_skills=num_skills, other_list=other_list, char_id=char_id,
+                user_id=user_id, attributes_id=attributes_id)
     else:
 
 
-
+        char = char_query(char_id)
         growth_list = growth_lst(growth_item)
 
         # flash('Character successfully saved')
@@ -488,13 +623,23 @@ def commit_char_attr():
         unvariety = compliment_list(no_spells, 8)
 
     return render_template("add_spells.html", growth_list=growth_list, spell_objects=spell_objects, specific_spells=specific_spells, 
-        unvariety=unvariety, template_id=template_id, user_id=user_id, char_id=char_id, attributes_id=attributes_id) 
+        unvariety=unvariety, template_id=template_id, user_id=user_id, char_id=char_id, attributes_id=attributes_id, character_level=char.character_level) 
 
 @app.route('/add_skills_after_spells', methods=["POST"])
 def skills_after_spells():
 
+
+    try:
+        assert 'user_id' in session
+    except:
+        AssertionError
+        flash('You must be logged in')
+        return redirect('/')
+
+
     attributes_id = int(request.form.get('attributes_id'))
     char_id = int(request.form.get('char_id'))
+    character_level = int(request.form.get('character_level'))
     spell_id_0 = int(request.form.get('spell_id_0'))
     spell_id_1 = int(request.form.get('spell_id_1'))
     spell_id_2 = int(request.form.get('spell_id_2'))
@@ -524,12 +669,50 @@ def skills_after_spells():
     spell_ids = [spell_id_0, spell_id_1, spell_id_2, spell_id_3, spell_id_4, spell_id_5, spell_id_6, spell_id_7]
     commit_spell(spell_ids, char_id)
 
-    return render_template("add_skills_after_spells.html", template_id=template_id, user_id=user_id, 
-        char_id=char_id, other_list=other_list, num_skills=num_skills, skills=skills, attributes_id=attributes_id) 
+    if character_level == 1:
+        return render_template("add_skills_after_spells.html", template_id=template_id, user_id=user_id, 
+                char_id=char_id, other_list=other_list, num_skills=num_skills, skills=skills, attributes_id=attributes_id) 
+
+    else:
+        this_template = Template.query.filter_by(template_id=template_id).first()
+        template_name = this_template.template_name
+        hitdice = this_template.hit_dice
+        attributes = retrieve_attributes(attributes_id)
+        spec_id, character_object, character, character_level = retrieve_character(char_id)
+        race = retrieve_race(spec_id)
+        skills_obj = retrieve_char_skills(char_id)
+        skills_obj = retrieve_skills(skills_obj)
+        spells_obj = retrieve_char_spells(char_id)
+        spells_obj = retrieve_spells(spells_obj)
+        growth_items = json.loads(this_template.growth_table)
+        growth_item = growth_items[f'{character_level}']
+        feats = json.loads(this_template.features_table)
+        prof = prof_bon(character[6])
+        sneak = growth_item.get("sneak_attack", "POOP")
+        rages = sum([item.get("rages", 0) for lvl, item in growth_items.items() if int(lvl) <= character_level])
+        rage_damage = sum([item.get("rage_damage", 0) for lvl, item in growth_items.items() if int(lvl) <= character_level])
+        barbarian = [rages, rage_damage]
+        spells_known = sum([item.get("spells_known", 0) for lvl, item in growth_items.items() if int(lvl) <= character_level])
+        feat_list = [item for lvl, item in feats.items() if int(lvl) <= character_level and item != "null"]
+        monk = growth_item.get("Ki Points", 0), growth_item.get("Unarmored Movement", 0)
+
+        return render_template("commit_char_true.html", attributes_id=attributes_id, template_id=template_id, this_template=this_template, 
+            attributes=attributes, hitdice=hitdice, character=character, race=race, skills_obj=skills_obj, char_id=char_id, 
+            spells_obj=spells_obj, sneak=sneak, barbarian=barbarian, spells_known=spells_known, feat_list=feat_list, template_name=template_name, 
+            monk=monk, prof=prof)
 
 @app.route('/commit_char_true', methods=["POST"])
 def commit_show_char():
-    
+
+
+    try:
+        assert 'user_id' in session
+    except:
+        AssertionError
+        flash('You must be logged in')
+        return redirect('/')
+
+
     attributes_id = int(request.form.get('attributes_id'))
     char_id = int(request.form.get('char_id'))
     skill_id_1 = int(request.form.get('skill_id_1'))
@@ -590,7 +773,7 @@ def log_in_form():
 
     else:
         flash('Incorrect username or password.')
-        return redirect('/log_in')
+        return redirect('/')
 
 
 @app.route('/log_out', methods=["GET"])

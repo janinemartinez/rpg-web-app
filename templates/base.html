@@ -1,12 +1,159 @@
 <!doctype html>
 <html>
 <head>
-  <script 
-    src="https://code.jquery.com/jquery-3.4.1.js"
-    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-    crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script 
+src="https://code.jquery.com/jquery-3.4.1.js"
+integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+crossorigin="anonymous">
 </script>
-  <title>role playing</title>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<style type="text/css">
+
+p.big{
+    float:left;
+    width:32px;
+    font-size:48px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    text-align:left;
+}
+
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -ms-overflow-style: scrollbar;
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+}
+
+body {
+    margin: 0;
+    font-family: GT Walsheim Pro, Arial, Helvetica;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: white;
+    text-align: left;
+    background-color: black;
+}
+
+div.row{
+  background-color: black;
+  color: white;
+}
+
+div.container{
+  background-color: black;
+  color: white;
+}
+
+div.col-sm-5{
+  background-color: black;
+  color: white;
+}
+
+div.col-md-6{
+  background-color: black;
+  color: white;
+}
+
+div.col-sm-6{
+  background-color: black;
+  color: white;
+}
+
+div.col-md-5{
+  background-color: black;
+  color: white;
+}
+
+div.col-lg-6{
+  background-color: black;
+  color: white;
+}
+
+div.col-md-5{
+  background-color: black;
+  color: white;
+}
+
+<div.mx-lg-n5{
+  background-color: black;
+  color: white;
+}
+
+<div.py-3{
+  background-color: black;
+  color: white;
+}
+
+
+<div.px-lg-5{
+  background-color: black;
+  color: white;
+}
+
+<div.col{
+  background-color: black;
+  color: white;
+}
+
+div.dice{
+    float:left;
+    width:32px;
+    background:black;
+    border:white 2px solid;
+    padding:10px;
+    border-radius: 5px;
+    font-size:24px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    text-align:center;
+    margin:5px;
+}
+
+.homepage nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.nav-transparent {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), transparent);
+  font-size: 1em;
+  z-index: 100;
+}
+
+.nav-transparent .nav-link,
+.nav-transparent .navbar-brand, 
+.nav-transparent p {
+  color: white;
+}
+
+.nav-transparent .navbar-brand {
+  font-weight: bold;
+}
+
+.nav-transparent .navbar-brand:hover,
+.nav-transparent .nav-link:hover {
+  color: #ffec5c;
+}
+
+.form-check-input {
+  margin-right: 10px;
+  font-size:14px;
+}
+
+.form-check-label {
+  margin-right: 15px;
+  font-size:14px;
+}
+
+</style>
+  <title> PERRIWINKLE KOBALD</title>
   {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>
@@ -19,16 +166,45 @@
 </head>
 
 <body>
-  Role Playing
-  <hr>
 
-    {% if 'user_id' in session %}
-        <label>Log Out</label>
+
+<div class="homepage">
+  <div class="pos-f-t">
+      <nav class="navbar navbar-expand-md nav-transparent w-100">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">The Perriwinkle Kobold</a>
+          <div id="navbar" class="navbar-collapse collapse navbar-expand-lg">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/character_start">Create a new character here.</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/your_characters">Visit your characters.</a>
+              </li>
+            </ul>
+          </div>
+          <p class="my-auto">
+
+            <div>
+                    {% if 'user_id' in session %}
+
         <form action = '/log_out' method="GET">
-        <input type = "submit" value="Log Out">
+        <button type="submit" class="btn btn-dark" value="Log Out">Log Out</button>
         </form>
-    {% endif %}
 
+    </div>
+{% elif 'user_id' not in session %}
+<form action = '/log_in' method="POST">
+<div class="input-group mb-3">
+  <input type="text" class="form-control" name = "email" placeholder="User's Email" aria-label="User's Email" aria-describedby="button-addon2"><input type="password" aria-label="Password"  placeholder="Password" name = "password" class="form-control">
+  <button class="btn btn-dark" type="submit" id="button-addon2">Log In</button>
+  </div>
+      {% endif %}
+</div>
+  </form>
+
+        </div>
+      </nav>
 
   {% block content %} put your content here {% endblock %}
 

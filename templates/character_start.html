@@ -1,93 +1,141 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+
 <html>
 <head>
     <title>Independent Values</title>
 </head>
 <body>
 
-  	<h2>Build your character.</h2>
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>
+
+    <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+        <H2 align="left" ><b>BUILD YOUR CHARACTER.</b></H2>
+    </div>
+    <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+  </div>
+</div>
+
+  	
   		<form action = '/character_start' method="POST">
-  	<ul>	
+
+  <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+        <label>Pick a name.</label>
+        <input type="text" class="form-control" name="char_name" placeholder ="name"></div>
+      <div class="col-sm-5  bg-black">
+        <label>What is your characters age?</label>
+        <input type="number" class="form-control" name="age" placeholder="0"></div>
+      <div class="col-sm-5  bg-black"></div>
+    </div>  
+  </div>
+  <br>
   		
-  		<label>Pick a name.</label><br>
-  		<input type="text" name="char_name" placeholder ="name">
- 
-  	</ul>
 
- 	<ul>
 
-  		<label>Class Templates</label>
+<ul>
+    <div class="container">
+  <div class="row mx-lg-n5">
+  		<label class="form-check-label">Class Templates</label>
+      <div class="form-check form-check-inline">
     	{% for nfo in temp_nfo %}
-      <li>
-          <input type="radio" name = "template_id" value="{{ nfo[0] }}"/>
-          <label> {{ nfo[1] }}</label>
-      </li>
+          <input class="form-check-input" id="inlineCheckbox1" type="radio" name = "template_id" value="{{ nfo[0] }}"/>
+          <label class="form-check-label" for="inlineCheckbox1"> {{ nfo[1] }}</label>
     	{% endfor %}
-	
-  	</ul>
+      </div>
+	</div>
+</div>
 
-  	<ul>
-  		<label>Species Types</label>
+</ul>
+<ul>
+    <div class="container">
+  <div class="row mx-lg-n5">
+  		<label class="form-check-label">Species Types</label>
     	{% for nfo in spec_nfo %}
-      <li>
-          <input type="radio" name = "spec_id" value="{{ nfo[0] }}"/>
-          <label> {{ nfo[1] }}</label>
-      </li>
+      <div class="form-check form-check-inline">
+          <input class="form-check-input" id="inlineCheckbox1" type="radio" name = "spec_id" value="{{ nfo[0] }}"/>
+          <label class="form-check-label" for="inlineCheckbox1"> {{ nfo[1] }}</label>
     	{% endfor %}
-  	</ul>
-  	<ul>
+      </div>
+  </div>
+</div>
+</ul>
+<ul>
+    <div class="container">
+  <div class="row mx-lg-n5">
+  		<label class="form-check-label">Alignment</label>
+      <div class="form-check form-check-inline">
+	        <input class="form-check-input" id="inlineCheckbox1"  type="radio" name = "char_align" value="Chaotic Good"/>
+	        <label class="form-check-label" for="inlineCheckbox1"> Chaotic Good</label><br>
 
-  		<label>Alignment</label>
-		<li>
-	        <input type="radio" name = "char_align" value="Chaotic Good"/>
-	        <label> Chaotic Good</label><br>
-	    </li>
-	    <li>
-	        <input type="radio" name = "char_align" value="Chaotic Neutral"/>
-	        <label> Chaotic Neutral</label><br>
-	    </li>
-	    <li>
-	        <input type="radio" name = "char_align" value="Chaotic Evil"/>
-	        <label> Chaotic Evil</label><br>
-	    </li>
-	    <li>
-	        <input type="radio" name = "char_align" value="Neutral Good"/>
-	        <label> Neutral Good</label><br>
-	    </li>
-	    <li>
-	        <input type="radio" name = "char_align" value="True Neutral"/>
-	        <label> True Neutral</label><br>
-	    </li>
-	    <li>
-	        <input type="radio" name = "char_align" value="Neutral Evil"/>
-	        <label> Neutral Evil</label><br>
-	    </li>
-	    <li>
-	        <input type="radio" name = "char_align" value="Lawful Good"/>
-	        <label> Lawful Good</label><br>
-	    </li>
-	    <li>
-	        <input type="radio" name = "char_align" value="Lawful Neutral"/>
-	        <label> Lawful Neutral</label><br>
-	    </li>
-	    <li>
-	        <input type="radio" name = "char_align" value="Lawful Evil"/>
-	        <label> Lawful Evil</label><br>
-      </li>
+	        <input class="form-check-input" id="inlineCheckbox1"  type="radio" name = "char_align" value="Chaotic Neutral"/>
+	        <label class="form-check-label" for="inlineCheckbox1"> Chaotic Neutral</label><br>
+
+	        <input class="form-check-input" id="inlineCheckbox1"  type="radio" name = "char_align" value="Chaotic Evil"/>
+	        <label class="form-check-label" for="inlineCheckbox1"> Chaotic Evil</label><br>
+
+	        <input class="form-check-input" id="inlineCheckbox1"  type="radio" name = "char_align" value="Neutral Good"/>
+	        <label class="form-check-label" for="inlineCheckbox1"> Neutral Good</label><br>
+
+	        <input class="form-check-input" id="inlineCheckbox1"  type="radio" name = "char_align" value="True Neutral"/>
+	        <label class="form-check-label" for="inlineCheckbox1"> True Neutral</label><br>
+
+	        <input class="form-check-input" id="inlineCheckbox1"  type="radio" name = "char_align" value="Neutral Evil"/>
+	        <label class="form-check-label" for="inlineCheckbox1"> Neutral Evil</label><br>
+
+	        <input class="form-check-input" id="inlineCheckbox1"  type="radio" name = "char_align" value="Lawful Good"/>
+	        <label class="form-check-label" for="inlineCheckbox1"> Lawful Good</label><br>
+
+	        <input class="form-check-input" id="inlineCheckbox1"  type="radio" name = "char_align" value="Lawful Neutral"/>
+	        <label class="form-check-label" for="inlineCheckbox1"> Lawful Neutral</label><br>
+
+	        <input class="form-check-input" id="inlineCheckbox1"  type="radio" name = "char_align" value="Lawful Evil"/>
+	        <label class="form-check-label" for="inlineCheckbox1"> Lawful Evil</label><br></li>
+        </div>
+      </div>
+</div>
 
 	
  </ul>
- 	<ul>	
-  		<label>Describe your character.</label><br>
-  		<textarea rows = "5" cols = "80" maxlength = "300" placeholder="flavor_txt"></textarea>
-  		
+ 	<ul>
+      <div class="container">
+      <div class="row mx-lg-n5">	
+  		<label class="form-check-label">Describe your character.</label><br>
+            </div>
+    </div>
+          <div class="container">
+      <div class="row mx-lg-n5">  
+  		<textarea rows = "5" class="form-control" cols = "80" maxlength = "300" name="flavor_txt" placeholder="Describe me."></textarea>
+                  </div>
+    </div>
+
   	</ul>
     <ul>	
-  		<form action = '/character_start' method="POST">
-  		<label>What is your characters age?</label><br>
-  		<input type="number" name="age" placeholder="0">
-  		<input type= "submit">
+            <div class="container">
+      <div class="row mx-lg-n5">  
+  		  <button class="btn btn-dark" type="submit" id="button-addon2">Submit</button>
   		</form>
+                  </div>
+    </div>
 
 
   </ul>
@@ -99,3 +147,4 @@
 
 </body>
 </html>
+{% endblock %}
