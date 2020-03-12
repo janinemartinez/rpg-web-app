@@ -6,13 +6,54 @@
     <title>dependencies</title>
 </head>
 <body>
-
-  <h2>Build your character.</h2>
-
-      <p>Hit Points</p>
-
-      <p>Based on your constitution score constitution modifier is {{ mod }}. Your character classes hit dice give you {{ hitdice }} hit points. Added to your hit dice is your constitution score giving you {{ hit_points }} hit points. Hit submit to save your hit points.
-
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>    
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>
+      <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+        <H1 align="left" ><b>3. Total Hit Points</b></H1>
+    </div>
+    <div class="col-sm-6"><H1 align="left" ><b>4. Ability Modifiers</b></H1>
+    </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+  </div>
+</div>
+<div class="container">
+      <div class="row mx-lg-n5">
+            <div class="col-sm-5  bg-black">
+                  <p align="left">Based on your constitution score constitution modifier is {{ mod }}. Your character classes hit dice give you {{ hitdice }} hit points. Added to your hit dice is your constitution score giving you {{ hit_points }} hit points.</p>
+            </div>
+                  <div class="col-sm-6">
+                        <table>
+                              <tr>
+                                    <td style="width: 200px">Strength Modifier: {{ stre_mod }}</td>
+                                    <td style="width: 200px">Dexterity Modifier: {{ dex_mod }}</td>
+                              </tr>
+                              <tr>
+                                    <td style="width: 200px">Constitution Modifier: {{ mod }}</td>
+                                    <td style="width: 200px">Intelligence Modifier: {{ inte_mod }}</td>
+                              </tr>
+                              <tr>
+                                    <td style="width: 200px">Wisdom Modifier: {{ wis_mod }}</td>
+                                    <td style="width: 200px">Charisma Modifier: {{ cha_mod }}</td>
+                              </tr>
+                        </table>
+                  </div>
+            <div class="col-sm-6"><font color="black">NOTHING</font>
+      </div>
+</div>
+</div>
             <form action = '/dependencies' method="POST">
 
 
@@ -33,8 +74,12 @@
                   <input type="hidden"  name="char_align" id="char_align" value= "{{ char_align }}">
                   <input type="hidden"  name="experience_points" id="experience_points" value= "{{ experience_points }}">
                   <input type="hidden"  name="hit_points" id="hit_points" value= "{{ hit_points }}">
-                  <input type="submit">
+<div class="container">
+      <div class="row mx-lg-n5">  
+              <button class="btn btn-dark" type="submit" id="button-addon2">Continue</button>
             </form>
+      </div>
+</div>
 
 
 

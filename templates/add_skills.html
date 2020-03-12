@@ -6,24 +6,54 @@
     <title>Add Skills</title>
 </head>
 <body>
-
-  <h2>Build your character.</h2>
-
-    <p>Pick {{ num_skills[-1] }} skills for your characters</p>
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>    
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+        <H1 align="left" ><b>6. PICK SKILLS.</b></H1>
+    </div>
+    <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+  </div>
+</div>
 
     <form action = '/commit_char_true' method="POST">
 
       <p>
          
         {% for pick_one in num_skills %}
+        <ul>
+    <div class="container">
+  <div class="row mx-lg-n5">
           <label>Skill {{ pick_one }}</label>
+                </div></div>
+              <div class="container">
+  <div class="row mx-lg-n5">
+            <div class="form-check">
           {% for skill in skills %}
-          <li>
-            <input type="radio" name = "skill_id_{{ pick_one }}" value="{{ skill[0] }}"/>
-            <label> {{ skill[1] }}</label></li>
+            <label class="form-check-label wide-form" for="inlineCheckbox1"> {{ skill[1] }}</label>
+            <input class="form-check-input wide-form" id="inlineCheckbox1" type="radio" name = "skill_id_{{ pick_one }}" value="{{ skill[0] }}"/>
+
         {% endfor %}
-            <br>
+    </div>
+</ul>
         {% endfor %}
+      </div>
+    </div>
+</div>
 
             {% for i in other_list %}
             <input type="hidden" name="skill_id_{{ i }}" id="skill_id_{{ i }}" value= "0">
@@ -32,9 +62,12 @@
             <input type="hidden" name="template_id" id="template_id" value= "{{ template_id }}">
             <input type="hidden" name="char_id" id="char_id" value= "{{ char_id }}">
             <input type="hidden" name="attributes_id" id="attributes_id" value= "{{ attributes_id }}">
-
-            <input type= "submit">
-    </form>
+            <div class="container">
+      <div class="row mx-lg-n5">  
+          <button class="btn btn-dark" type="submit" id="button-addon2">Submit</button>
+        </form>
+      </div>
+    </div>
 
 </body>
 </html>

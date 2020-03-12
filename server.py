@@ -423,30 +423,36 @@ def add_attributes():
     char_align = request.form.get('char_align')
     character_level = int(request.form.get('character_level'))
     char_name = request.form.get('char_name')
-    charisma = request.form.get('charisma')
+    charisma = int(request.form.get('charisma'))
     constitution = int(request.form.get('constitution'))
-    dexterity = request.form.get('dexterity')
+    dexterity = int(request.form.get('dexterity'))
     experience_points = int(request.form.get('experience_points'))
     flavor_txt = request.form.get('flavor_txt')
     hit_points = request.form.get('hit_points')
-    intelligence = request.form.get('intelligence')
+    intelligence = int(request.form.get('intelligence'))
     spec_id = int(request.form.get('spec_id'))
-    strength = request.form.get('strength')
+    strength = int(request.form.get('strength'))
     template_id = int(request.form.get('template_id'))
     user_id = int(request.form.get('user_id'))
-    wisdom = request.form.get('wisdom')
+    wisdom = int(request.form.get('wisdom'))
 
     hitdice = Template.query.filter_by(template_id=template_id).first()
     hitdice = hitdice.hit_dice
 
     mod = modifiers(constitution)
+    stre_mod = modifiers(strength)
+    dex_mod = modifiers(dexterity)
+    inte_mod = modifiers(intelligence)
+    wis_mod = modifiers(wisdom)
+    cha_mod = modifiers(charisma)
     hit_points = hitdice + mod
 
     return render_template('/dependencies.html', user_id=user_id, template_id=template_id, spec_id=spec_id,
         char_name=char_name, flavor_txt=flavor_txt, age=age, strength=strength, char_align=char_align,
         dexterity=dexterity, constitution=constitution, intelligence=intelligence, hit_points=hit_points,
         wisdom=wisdom, charisma=charisma, experience_points=experience_points, character_level=character_level, 
-        mod=mod, hitdice=hitdice)
+        mod=mod, hitdice=hitdice, stre_mod=stre_mod, dex_mod=dex_mod, inte_mod=inte_mod, wis_mod=wis_mod, 
+        cha_mod=cha_mod)
 
 
 
@@ -623,7 +629,7 @@ def commit_char_attr():
         unvariety = compliment_list(no_spells, 8)
 
     return render_template("add_spells.html", growth_list=growth_list, spell_objects=spell_objects, specific_spells=specific_spells, 
-        unvariety=unvariety, template_id=template_id, user_id=user_id, char_id=char_id, attributes_id=attributes_id, character_level=char.character_level) 
+        unvariety=unvariety, template_id=template_id, user_id=user_id, char_id=char_id, attributes_id=attributes_id, character_level=character_level) 
 
 @app.route('/add_skills_after_spells', methods=["POST"])
 def skills_after_spells():

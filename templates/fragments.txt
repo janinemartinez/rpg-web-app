@@ -1,0 +1,39 @@
+def refine_spells(previousspells, prospectivespells):
+
+    new_list = []
+
+    for i in range(len(prospectivespells)):
+        for j in previousspells:
+            if previousspells[1] != prospectivespells[i][2]:
+                new_list.append(i)
+
+    return new_list
+
+def previous_spells(charid):
+
+    spell_list = db.session.query(Char_spell.char_id, Char_spell.spell_id).all()
+    new_list = []
+
+    for i in range(len(spell_list)):
+        if spell_list[i][0] == charid:
+            new_list.append(i)
+
+    return new_list
+
+
+
+
+spell_list = previous_spells(char_id)
+
+       
+specific_spells = refine_spells(spell_list, specific_spells)
+
+
+
+
+var limit = 3;
+$('input.single-checkbox').on('change', function(evt) {
+   if($(this).siblings(':checked').length >= limit) {
+       this.checked = false;
+   }
+});

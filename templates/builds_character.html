@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,104 +10,108 @@
 </style>
 </head>
 <body>
-{% block content %}
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>    
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>
+<div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+        <H1 align="left" ><b>2. ROLL ABILITY SCORES.</b></H1>
+    </div>
+    <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+  </div>
+</div>
+  <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+              <p align="left">Roll your attributes using 4d6 and throwing out the lowest roll in order to compile an attribute. Once you have completed this process six times you may insert them into the fields you want them to populate, then hit submit.</p></div>
+    </div>
+    <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+  </div>
+</div>
 
-
-      <p>Roll your attributes using 4d6 and throwing out the lowest roll in order to compile an attribute. Once you have completed this process six times you may insert them into the fields you want them to populate, then hit submit.,</p></div>
-
-<table>
-      <tr>
-            <th>
-                  <h4 valign="bottom" align="left">Strength</h4>
+  <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+                  <div><h4 id="strStatus" style="clear:left;" valign="bottom" align="left">Strength</h4></div>
                   <div id="die1" class="dice">0</div>
                   <div id="die2" class="dice">0</div>
                   <div id="die3" class="dice">0</div>
                   <div id="die4" class="dice">0</div>
-            </th>
-            <th>
-                  <button id="rollDiceStr">Roll Dice</button>
-            </th>
-            <th align="left">  
-                  <h4 id="strStatus" style="clear:left;"></h4></div>
-            </th>
-      </tr>
-      <tr>
-            <th>
-                  <h4 align="left">Dexterity</h4>
+                  <div><button class="btn btn-dark" id="rollDiceStr">Roll Dice</button>
+                  </div></div>
+      <div class="col-sm-5  bg-black">
+                  <h4 id="dexStatus" style="clear:left;" align="left">Dexterity</h4>
                   <div id="die5" class="dice">0</div>
                   <div id="die6" class="dice">0</div>
                   <div id="die7" class="dice">0</div>
                   <div id="die8" class="dice">0</div>
-            </th>
-            <th>
-                  <button id="rollDiceDex">Roll Dice</button>
-            </th>
-            <th align="left"> 
-                  <h4 id="dexStatus" style="clear:left;"></h4></div>
-            </th>
-      </tr>
-      <tr>
-            <th>
-                  <h4 align="left">Constitution</h4>
+                  <div><button class="btn btn-dark" id="rollDiceDex">Roll Dice</button>
+                  </div></div>
+      <div class="col-sm-5  bg-black"></div>
+    </div>  
+  </div>
+  <br>
+    <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+                  <h4 id="conStatus" style="clear:left;" align="left">Constitution</h4>
                   <div id="die9" class="dice">0</div>
                   <div id="die10" class="dice">0</div>
                   <div id="die11" class="dice">0</div>
                   <div id="die12" class="dice">0</div>
-            </th>
-            <th>
-                  <button id="rollDiceCon">Roll Dice</button>
-            </th>
-            <th align="left">
-                  <h4 id="conStatus" style="clear:left;"></h4></div>
-            </th>
-      </tr>
-      <tr>
-            <th>
-                  <h4 align="left">Intelligence</h4>
+                  <div><button class="btn btn-dark" id="rollDiceCon">Roll Dice</button></div></div>
+      <div class="col-sm-5  bg-black">
+                  <h4 id="intStatus" style="clear:left;" align="left">Intelligence</h4>
                   <div id="die13" class="dice">0</div>
                   <div id="die14" class="dice">0</div>
                   <div id="die15" class="dice">0</div>
                   <div id="die16" class="dice">0</div>
-            </th>
-            <th>
-                  <button id="rollDiceInt">Roll Dice</button>
-            </th>
-            <th align="left">
-                  <h4 id="intStatus" style="clear:left;"></h4></div>
-            </th>
-      </tr>
-      <tr>
-            <th>
-                  <h4 align="left">Wisdom</h4>
+                  <div><button class="btn btn-dark" id="rollDiceInt">Roll Dice</button></h4></div></div>
+      <div class="col-sm-5  bg-black"></div>
+    </div>  
+  </div>
+  <br>
+<div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+                  <h4 id="wisStatus" style="clear:left;" align="left">Wisdom</h4>
                   <div id="die17" class="dice">0</div>
                   <div id="die18" class="dice">0</div>
                   <div id="die19" class="dice">0</div>
                   <div id="die20" class="dice">0</div>
-            </th>
-            <th>
-                  <button id="rollDiceWis">Roll Dice</button>
-            </th>
-            <th align="left">
-                  <h4 id="wisStatus" style="clear:left;"></h4></div>
-            </th>
-      </tr>
-      <tr>
-            <th>
-                  <h4 align="left">Charisma</h4>
+                  <div><button class="btn btn-dark" id="rollDiceWis">Roll Dice</button></div></div>
+      <div class="col-sm-5  bg-black">
+                  <h4 id="chaStatus" style="clear:left;" align="left">Charisma</h4>
                   <div id="die21" class="dice">0</div>
                   <div id="die22" class="dice">0</div>
                   <div id="die23" class="dice">0</div>
                   <div id="die24" class="dice">0</div>
-            </th>
-            <th>
-                  <button id="rollDiceCha">Roll Dice</button>
-            </th>
-            <th align="left">
-                  <h4 id="chaStatus" style="clear:left;"></h4></div>
-            </th>
-      </tr>
-      
-</table>
+                  <div><button class="btn btn-dark" id="rollDiceCha">Roll Dice</button></div></div>
+      <div class="col-sm-5  bg-black"></div>
+    </div>  
+  </div>
+  <br>     
+
+
+
+
+
             <form action = '/builds_character' method="POST">
 
 
@@ -126,8 +130,12 @@
                   <input type="hidden"  name="intelligence" id="intelligence" value=""  />
                   <input type="hidden"  name="wisdom" id="wisdom" value=""  />
                   <input type="hidden"  name="charisma" id="charisma" value=""  />
-                  <input type= "submit">
+<div class="container">
+      <div class="row mx-lg-n5">  
+              <button class="btn btn-dark" type="submit" id="button-addon2">Submit</button>
             </form>
+      </div>
+</div>
 <script>
 
     $('#rollDiceStr').one('click', () => {
@@ -150,7 +158,7 @@
         die4.html(d4);
         var less = Math.min(d1, d2, d3, d4)
         var strength = d1 + d2 + d3 + d4 - less
-        strStatus.html(`${strength}`);
+        strStatus.html(`Strength: ${strength}`);
 
         $('#strength').val(strength);
     });
@@ -174,7 +182,7 @@
         die8.html(d8);
         var less = Math.min(d5, d6, d7, d8)
         var dexterity = d5 + d6 + d7 + d8 - less
-        dexStatus.html(`${dexterity}`);
+        dexStatus.html(`Dexterity: ${dexterity}`);
 
         $('#dexterity').val(dexterity);
     });
@@ -198,7 +206,7 @@
         die12.html(d12);
         var less = Math.min(d9, d10, d11, d12)
         var constitution = d9 + d10 + d11 + d12 - less
-        conStatus.html(`${constitution}`);
+        conStatus.html(`Constitution: ${constitution}`);
 
         $('#constitution').val(constitution);
     });
@@ -222,7 +230,7 @@
         die16.html(d16);
         var less = Math.min(d13, d14, d15, d16)
         var intelligence = d13 + d14 + d15 + d16 - less
-        intStatus.html(`${intelligence}`);
+        intStatus.html(`Intelligence: ${intelligence}`);
 
         $('#intelligence').val(intelligence);
     });
@@ -246,7 +254,7 @@
         die20.html(d20);
         var less = Math.min(d17, d18, d19, d20)
         var wisdom = d17 + d18 + d19 + d20 - less
-        wisStatus.html(`${wisdom}`);
+        wisStatus.html(`Wisdom: ${wisdom}`);
 
         $('#wisdom').val(wisdom);
     });
@@ -270,12 +278,18 @@
         die24.html(d24);
         var less = Math.min(d21, d22, d23, d24)
         var charisma = d21 + d22 + d23 + d24 - less
-        chaStatus.html(`${charisma}`);
+        chaStatus.html(`Charisma: ${charisma}`);
 
         $('#charisma').val(charisma);
     });            
 
 </script>
+    <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>
 </body>
 </html>
 {% endblock %}

@@ -1,26 +1,63 @@
 {% extends 'base.html' %}
 {% block content %}
-
-  <h2>New User Registration</h2>
-<table>
-	<form action = '/register' method="POST">
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>    
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>  
+ <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+        <H1 align="left" ><b>0. NEW USER REGISTRATION</b></H1>
+        </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+  </div>
+</div>
+</div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+        <table>
+		<form action = '/register' method="POST">
 		<tr>
-	    	<th align="right"><label>Email</label></th>
-	    	<th><input type="text" name = "email"></th>
+	    	<th align="left"><label>EMAIL</label></th>
+	    	<th><input type="text" class="form-control wide-form" name = "email"></th>
 	    </tr>
 	    <tr>
-	    	<td align="right"><label>Password</label></td>
-	    	<td><input type="password" name = "password"></td>
+	    	<td align="left"><label>PASSWORD</label></td>
+	    	<td><input type="password" class="form-control wide-form" name = "password"></td>
 	    </tr>
 	    <tr>
-	    	<td align="right"><label>Retype</label></td>
-	    	<td><input type="password" name = "password2"></td>
+	    	<td align="left"><label>RETYPE</label></td>
+	    	<td><input type="password" class="form-control wide-form" name = "password2"></td>
 	    </tr>
 	    <tr>
-	    	<td><input type = "submit"></td>
+	    	<td>
 	    </tr>
-
-	</form>
-</table>
+	    </table>
+        </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+  </div>
+</div>
+</div>
+<div class="container">
+      <div class="row mx-lg-n5">  
+              <button class="btn btn-dark" type="submit" id="button-addon2">Continue</button>
+            </form>
+      </div>
+</div>
 
 {% endblock %}

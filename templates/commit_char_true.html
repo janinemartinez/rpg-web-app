@@ -1,57 +1,165 @@
+<!DOCTYPE html>
 {% extends 'base.html' %}
 {% block content %}
-<!DOCTYPE html>
 <html>
 <head>
-    <title>Character Sheet</title>
+    <title>Add Spells</title>
 </head>
 <body>
-<h1>Character Sheet</h1>
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>    
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+        <H1 align="left" ><b>7. CHARACTER SHEET</b></H1>
+    </div>
+    <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+  </div>
+</div>
 
-<h4>Name: {{ character[0] }}
-	<br>Race : {{ race[0] }}
-	<br>Class : {{ template_name }}
-	<br>Character Alignment : {{ character[1] }}
-	<br>Age : {{ character[4] }}
-	<br>Experienct Points : {{ character[5] }}
-	<br>Character Level : {{ character[6] }}
-	<br>Character Speed : {{ race[1]}}
-	<br>Proficiency Bonus : {{ prof }}
-	{% if spells_known|int() != 0|int() %}
-	<br>Spells Known : {{ spells_known }}
-	{% endif %}
-</h4>
-
-<h3>Strength : {{ attributes[1]}}  Dexterity : {{ attributes[1]}} Constitution : {{ attributes[2]}} Wisdom : {{ attributes[3]}} Intelligence : {{ attributes[4] }} Charisma : {{attributes[5]}}</h3>
-<h3> Hit Points : {{ character[3] }}
-<h3>Character Skills</h3>
-{% for i in skills_obj %}
-	<li>{{ i[1] }} : {{ i[0]}}</li>
-{% endfor %}
-
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col">Name: {{ character[0] }}</div>
+		<div class="col">Race : {{ race[0] }}</div>
+		<div class="col">Class : {{ template_name }}</div>
+		<div class="col">Character Alignment : {{ character[1] }}</div>
+		<div class="col">Age : {{ character[4] }}</div>
+	</div>
+</div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col">Experienct Points : {{ character[5] }}</div>
+		<div class="col">Character Level : {{ character[6] }}</div>
+		<div class="col">Character Speed : {{ race[1]}}</div>
+		<div class="col">Proficiency Bonus : {{ prof }}</div>
+		<div class="col">	{% if spells_known|int() != 0|int() %}
+		Spells Known : {{ spells_known }}
+		{% endif %}</div>
+	</div>
+</div>
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>    
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col"><h2>ABILITY SCORES</h2></div>
+	</div>
+</div> 
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col"><h6>Strength : {{ attributes[1]}}</h6></div>
+		<div class="col"><h6>Dexterity : {{ attributes[1]}}</h6></div>
+		<div class="col"><h6>Constitution : {{ attributes[2]}}</h6></div>
+		<div class="col"><h6>Wisdom : {{ attributes[3]}}</h6></div>
+		<div class="col"><h6>Intelligence : {{ attributes[4] }}</h6></div>
+		<div class="col"><h6>Charisma : {{attributes[5]}}</h6></div>
+	</div>
+</div>
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>   
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col"><h2>CHARACTER SKILLS</h2></div>
+	</div>
+</div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col">{% for i in skills_obj %}
+	{{ i[1] }} : {{ i[0]}}
+{% endfor %}</div>
+	</div>
+</div>
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>    
 {% if spells_obj|length > 0 %}
-<h3>Character Spells</h3>
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col"><h2>CHARACTER SPELLS</h2></div>
+	</div>
+</div>
 {% endif %}
-{% for i in spells_obj %}
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col">{% for i in spells_obj %}
 	<li>{{ i[1] }} : {{ i[0]}}</li>
-{% endfor %}
-<h3>Feats & Special Abilities</h3>
-{% if sneak|string() != "POOP"|string() %}
-<h4><li>Sneak Attack : {{ sneak }}</li></h4>
+{% endfor %}</div>
+	</div>
+</div>
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+</div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col"><h2>FEATS & SPECIAL ABILITIES</h2></div>
+	</div>
+</div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col">{% if sneak|string() != "POOP"|string() %}
+Sneak Attack : {{ sneak }}
 {% endif %}
 {% if monk[0]|int() != 0|int() %}
-<h4><li>Ki Points : {{ monk[0] }}</li></h4>
-<h4><li>Unarmored Movement : {{ monk[1] }}</li></h4>
+Ki Points : {{ monk[0] }}
+Unarmored Movement : {{ monk[1] }}
 {% endif %}
 {% if barbarian[0]|int() != 0|int() %}
-<h4><li>Rages : {{ barbarian[0] }}</li></h4>
-<h4><li>Rage Damage : {{ barbarian[1] }}</li></h4>
+Rages : {{ barbarian[0] }}
+Rage Damage : {{ barbarian[1] }}
 {% endif %}
 {% for feat in feat_list %}
-<h4><li>{{ feat }}</li></h4>
-{% endfor %}
-<h3>Description</h3>
-<p>{{ character[2] }}</p>
+{{ feat }}
+{% endfor %}</div>
+	</div>
+</div>
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+</div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col"><h2>DESCRIPTION</h2></div>
+	</div>
+</div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+    	<div class="col">{{ character[2] }}</div>
+	</div>
+</div>  
+<div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+</div>
 </body>
 </html>
 {% endblock %}

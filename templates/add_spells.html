@@ -3,30 +3,60 @@
 {% block content %}
 <html>
 <head>
-    <title>Add Skills</title>
+    <title>Add Spells</title>
 </head>
 <body>
-
-  <h2>Build your character.</h2>
-
-    <p>Pick spells for your characters</p>
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>    
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+        <H1 align="left" ><b>5. PICK SPELLS.</b></H1>
+    </div>
+    <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+  </div>
+</div>
 
 
     <form action = '/add_skills_after_spells' method="POST">
 
-      <p>
-         
+
         {% for pick_one in growth_list %}
-          <label>spell level {{ pick_one[1] }}</label>
+<ul>
+    <div class="container">
+  <div class="row mx-lg-n5">
+          <label><b>Spell Level {{ pick_one[1] }}:</b></label>
+      </div></div>
+              <div class="container">
+  <div class="row mx-lg-n5">
+            <div class="form-check">
           {% for spell in specific_spells %}
             {% if spell[0]|int() == pick_one[1]|int() %}
-            <li>
-            <input type="radio" name = "spell_id_{{ pick_one[0] }}" value="{{ spell[2] }}"/>
-            <label> {{ spell[1] }}</label></li>
+            <label class="form-check-label wide-form" for="inlineCheckbox1"> {{ spell[1] }}</label>
+            <input class="form-check-input wide-form" id="inlineCheckbox1" type="radio" name = "spell_id_{{ pick_one[0] }}" value="{{ spell[2] }}"/>
             {% endif %}
         {% endfor %}
-            <br>
+    </div>
+</ul>
         {% endfor %}
+      </div>
+    </div>
+</div>
+         
+
 
             {% for i in unvariety %}
             <input type="hidden" name="spell_id_{{ i }}" id="spell_id_{{ i }}" value= "0">
@@ -36,10 +66,12 @@
             <input type="hidden" name="char_id" id="char_id" value= "{{ char_id }}">
             <input type="hidden" name="attributes_id" id="attributes_id" value= "{{ attributes_id }}">
             <input type="hidden" name="character_level" id="character_level" value="{{ character_level}}">
-            <input type= "submit">
-    </form>
-</body>
-</html>
+            <div class="container">
+      <div class="row mx-lg-n5">  
+          <button class="btn btn-dark" type="submit" id="button-addon2">Submit</button>
+        </form>
+      </div>
+    </div>
 
 
 </body>

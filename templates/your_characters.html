@@ -1,10 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Your Characters</h1>
 
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>    
+  <div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+      <div class="col py-3 px-lg-5  bg-black"><font color="black">NOTHING</font></div>
+    </div>
+  </div>
+ <div class="container">
+    <div class="row mx-lg-n5">
+      <div class="col-sm-5  bg-black">
+        <H1 align="left" ><b>8. YOUR CHARACTERS.</b></H1>
+    </div>
+    <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+        <div class="col-sm-6"><font color="black">NOTHING</font>
+    </div>
+  </div>
+</div>
 
-<table style="width: 65%">
+ <div class="container">
+<table style="width: 85%">
 
 <tr><h3>
 	<th align="left">Name</th>
@@ -17,11 +40,14 @@
 	{% for i in user_chars_expand %}
 <tr>
 <form action = '/commit_char_true' method="POST">
-<h5><th align="left">{{ i[1] }}</th>
-	<th align="left">{{ i[8] }}</th>
-	<th align="left">{{ i[9] }}</th>
-	<th>{{ i[6] }}</th>
-	<th>{{ i[5] }}</th>
+<h5><td align="left">{{ i[1] }}</td>
+	<td align="left">{{ i[8] }}</td>
+	<td align="left">{{ i[9] }}</td>
+	<td>{{ i[6] }}</td>
+	<td>{{ i[5] }}</td>
+</div>
+
+
 <input type="hidden" name="attributes_id" id="attributes_id" value="{{ i[7] }}" />
 <input type="hidden" name="char_id" id="char_id" value="{{ i[0] }}" />
 <input type="hidden" name="template_id" id="template_id"value="{{ i[3] }}" />
@@ -31,7 +57,7 @@
 <input type="hidden" name="skill_id_3" id="skill_id_3" value="0" />
 <input type="hidden" name="skill_id_4" id="skill_id_4" value="0" />
 <input type="hidden" name="skill_id_5" id="skill_id_5" value="0" />
-<th><button type="submit" class="btn btn-secondary btn-sm">VIEW CHARACTER</button></th></form>
+<th><button type="submit" class="btn btn-secondary btn-dark btn-sm">VIEW CHARACTER</button></th></form>
 <form action = '/upgrade_portal' method="POST"><th>
 <input type="hidden" name="char_id" id="char_id" value="{{ i[0] }}" />
 <input type="hidden" name="user_id" id="user_id" value="{{ i[2] }}" />
@@ -40,7 +66,7 @@
 <input type="hidden" name="character_level" id="character_level" value="{{ i[6] }}" />
 <input type="hidden" name="attributes_id" id="attributes_id" value="{{ i[7] }}" />
 <input type="text" name="num_xp" size = "6" value="0">
-<button type="submit" class="btn btn-secondary btn-sm">ADD EXPERIENCE POINTS</button></form></th></h5>
+<button type="submit" class="btn btn-dark btn-secondary btn-sm">ADD EXPERIENCE POINTS</button></form></th></h5>
 </tr>
 {% endfor %}
 </table>
